@@ -1,0 +1,54 @@
+---
+- name: Ensure Java is installed
+  package:
+    name: openjdk-8-jre
+    state: latest
+  become: true
+  register: javainstalled
+
+- name: Ensure target folder for elasticsearch exists
+  file:
+    path: /opt/elasticsearch
+    state: directory
+    owner: "{{ elasticsearch_user }}"
+    group: "{{ elasticsearch_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure Elasticsearch is downloaded
+  get_url:
+    url: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.2.tar.gz
+    dest: /opt/elasticsearch/elasticsearch-5.5.2.tar.gz
+    force: no
+  register: elasticsearchdownloaded
+
+- name: Unzip the downloaded Elasticsearch
+  unarchive:
+    src: /opt/elasticsearch/elasticsearch-5.5.2.tar.gz
+    dest: /opt/elasticsearch/
+    remote_src: True
+  when: elasticsearchdownloaded|changed
+
+- name: Ensure elasticsearch init script is installed
+  template:
+    src: templates/elasticsearch
+    dest: /etc/init.d/elasticsearch
+    remote_src: no
+    mode: 0755
+  become: true
+  notify: Start Elasticsearch
+
+- name: Ensure elasticsearch systemd script is installed
+  template:
+    src: templates/elasticsearch.service
+    dest: /etc/systemd/system/elasticsearch.service
+    remote_src: no
+  become: true
+  notify: Start Elasticsearch
+
+- name: Ensure that vm.max_map_count is high enough
+  lineinfile:
+    path: /etc/sysctl.conf
+    regexp: '^vm.max_map_count'
+    line: 'vm.max_map_count=262144'
+  become: true
