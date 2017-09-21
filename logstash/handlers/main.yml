@@ -1,0 +1,7 @@
+---
+- name: Start Logstash
+  service:
+    name: logstash
+    state: started
+    enabled: yes
+  become: true

@@ -1,0 +1,42 @@
+---
+- name: Download and install the Public Signing Key
+  shell: wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+  become: true
+
+- name: Install the apt-transport-https package
+  package:
+    name: apt-transport-https
+    state: latest
+  become: true
+
+- name: Add repository definition
+  copy:
+    src: files/elastic-5.x.list
+    dest: /etc/apt/sources.list.d/elastic-5.x.list
+  become: true
+
+- name: Ensure that logstash is installed
+  package:
+    name: logstash
+    state: latest
+    update_cache: yes
+  become: true
+  notify: Start Logstash
+
+- name: Ensure that beats input plugin is installed
+  template:
+    src: templates/10-input-beats.conf
+    dest: /etc/logstash/conf.d/10-input-beats.conf
+  become: true
+
+- name: Ensure that tcp input plugin is installed
+  template:
+    src: templates/11-input-tcp.conf
+    dest: /etc/logstash/conf.d/11-input-tcp.conf
+  become: true
+
+- name: Ensure that elasticsearch output plugin is installed
+  template:
+    src: templates/70-output-elasticsearch.conf
+    dest: /etc/logstash/conf.d/70-output-elasticsearch.conf
+  become: true
