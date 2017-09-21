@@ -13,7 +13,8 @@ called `openjdk-8-jre`).
 Role Variables
 --------------
 
-Currently, this role does not have any variables.
+- `elasticsearch_user`: The user which should run elasticsearch
+- `elasticsearch_group`: The group which should run elasticsearch
 
 Example Playbook
 ----------------
