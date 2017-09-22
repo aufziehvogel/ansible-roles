@@ -1,4 +1,5 @@
 ---
 logstash_beats_port: 5044
 logstash_tcp_port: 5040
+logstash_syslog_docker_port: 5041
 logstash_elasticsearch_host: localhost:9200
