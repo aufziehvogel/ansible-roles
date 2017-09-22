@@ -35,10 +35,10 @@
     dest: /etc/logstash/conf.d/11-input-tcp.conf
   become: true
 
-- name: Ensure that docker syslog input plugin is installed
+- name: Ensure that docker gelf input plugin is installed
   template:
-    src: templates/12-input-syslog.conf
-    dest: /etc/logstash/conf.d/12-input-syslog.conf
+    src: templates/12-input-gelf.conf
+    dest: /etc/logstash/conf.d/12-input-gelf.conf
   become: true
 
 - name: Ensure that elasticsearch output plugin is installed
