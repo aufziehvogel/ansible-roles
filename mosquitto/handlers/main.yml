@@ -1,0 +1,7 @@
+---
+- name: Start Mosquitto
+  service:
+    name: mosquitto
+    state: started
+    enabled: yes
+  become: true

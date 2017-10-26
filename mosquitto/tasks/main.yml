@@ -1,0 +1,7 @@
+---
+- name: Ensure mosquitto is installed
+  package:
+    name: mosquitto
+    state: latest
+  become: true
+  notify: Start Mosquitto
