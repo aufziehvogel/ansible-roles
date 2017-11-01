@@ -1,5 +1,5 @@
-Elasticsearch
-=============
+Mosquitto
+=========
 
 This is a role to install mosquitto, an MQTT broker.
 
