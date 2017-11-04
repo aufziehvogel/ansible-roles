@@ -2,6 +2,6 @@
 - name: Ensure mosquitto is installed
   package:
     name: mosquitto
-    state: latest
+    state: present
   become: true
   notify: Start Mosquitto

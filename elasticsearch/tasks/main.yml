@@ -2,7 +2,7 @@
 - name: Ensure Java is installed
   package:
     name: openjdk-8-jre
-    state: latest
+    state: present
   become: true
   register: javainstalled
 

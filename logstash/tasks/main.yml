@@ -6,7 +6,7 @@
 - name: Install the apt-transport-https package
   package:
     name: apt-transport-https
-    state: latest
+    state: present
   become: true
 
 - name: Add repository definition
@@ -18,7 +18,7 @@
 - name: Ensure that logstash is installed
   package:
     name: logstash
-    state: latest
+    state: present
     update_cache: yes
   become: true
   notify: Start Logstash
