@@ -1,0 +1,27 @@
+---
+- name: Ensure Certbot is installed
+  package:
+    name: certbot
+    state: latest
+  become: true
+
+- name: Get a certificate
+  command: "certbot certonly --standalone -m {{ ssl_certbot_mail }} --agree-tos -d {{ item|join(' -d ') }}"
+  args:
+    creates: /etc/letsencrypt/live/{{ item[0] }}/fullchain.pem
+  with_items: "{{ ssl_domains }}"
+  become: true
+ 
+- name: Ensure CA certificate is available
+  get_url:
+    url: https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem.txt
+    dest: /etc/ssl/ca.crt
+    checksum: sha256:e446c5e9dbef9d09ac9f7027c034602492437a05ff6c40011d7235fca639c79a
+  become: true
+
+- name: Ensure cronjob for certificate renewal is active
+  copy:
+    src: files/certificates-renew.sh
+    dest: /etc/cron.weekly/ssl-certificates-renew
+    mode: 0755
+  become: true
