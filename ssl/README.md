@@ -13,17 +13,18 @@ Role Variables
 --------------
 
 You must set the variables `ssl_certbot_mail` to your mail address and the
-variable `ssl_domains` to a list of lists of lists (because ansible does
-[flattening of lists](https://github.com/ansible/ansible/issues/5913) in
-`with_items`).
+variable `ssl_domains` to dictionary with the key being the folder name in which
+you want to store the certificates and the value being a list of domain names
+for which the certificate should be issued.
 
     ssl_certbot_mail: mail@example.com
     ssl_domains:
-      -
-        - ['example.com', 'www.example.com']
-        - ['example.org']
+      example.com:
+        - example.com
+        - www.example.com
+      example.org: ['example.org']
 
-For each line in this configuration, certbot will issue one certificate that
+For each entry in the dictionary, certbot will issue one certificate that
 is valid for the given domains.
 
 Dependencies
