@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+now=$(date +'%Y%m%d-%H%M%S')
+filename=${now}.sql
+filepath="{{ backup_postgres_s3_tmpdir }}/$filename"
+
+su -c "pg_dumpall > $filepath" {{ backup_postgres_s3_db_user }} 
+gzip $filepath
+
+su -c "aws s3 cp $filepath.gz s3://{{ backup_postgres_s3_bucket }}/postgres/${filename}.gz" {{ backup_postgres_s3_s3_user }}
+
+rm $filepath.gz
+
+curl -fsS --retry 3 {{ backup_postgres_s3_healthchecks_url }} > /dev/null

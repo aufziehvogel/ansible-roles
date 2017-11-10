@@ -1,0 +1,6 @@
+---
+backup_postgres_s3_db_user: postgres
+backup_postgres_s3_tmpdir: /tmp
+backup_postgres_s3_bucket: backup
+backup_postgres_s3_healthchecks_url: http://localhost/
+backup_postgres_s3_s3_user: postgres

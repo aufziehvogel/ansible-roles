@@ -1,0 +1,14 @@
+---
+- name: Ensure aws-cli is installed
+  package:
+    name: awscli
+    state: present
+  become: true
+
+- name: Ensure backup script is installed
+  template:
+    src: templates/backup.j2
+    dest: /etc/cron.daily/backup
+    remote_src: no
+    mode: 0755
+  become: true
