@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+now=$(date +'%Y%m%d-%H%M%S')
+filename=${now}.gz
+filepath="{{ backup_mongodb_s3_tmpdir }}/$filename"
+
+{% if backup_mongodb_s3_ssl %}
+    {% set ssl_enabled = "--ssl" %}
+{% else %}
+    {% set ssl_enabled = "" %}
+{% endif %}
+
+mongodump {{ ssl_enabled }} --host {{ backup_mongodb_s3_host }} \
+    --username {{ backup_mongodb_s3_username }} \
+    --password {{ backup_mongodb_s3_password }} \
+    --gzip \
+    --archive=$filepath
+
+su -c "aws s3 cp $filepath s3://{{ backup_mongodb_s3_bucket }}/mongodb/${filename}.gz" {{ backup_mongodb_s3_s3_user }}
+
+rm $filepath
+
+curl -fsS --retry 3 {{ backup_mongodb_s3_healthchecks_url }} > /dev/null

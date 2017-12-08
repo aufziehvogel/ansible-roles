@@ -1,0 +1,7 @@
+---
+backup_mongodb_s3_host: localhost
+backup_mongodb_s3_ssl: true
+backup_mongodb_s3_tmpdir: /tmp
+backup_mongodb_s3_bucket: backup
+backup_mongodb_s3_healthchecks_url: http://localhost/
+backup_mongodb_s3_s3_user: mongodb
