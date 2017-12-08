@@ -9,6 +9,15 @@ Requirements
 
 You need to have haproxy installed.
 
+The domains for which you want to request certificates, must serve files from
+`/var/www/letsencrypt` for ACME challenges. For example, for nginx you'd
+want to use:
+
+    location /.well-known/acme-challenge {                                      
+        root /var/www/letsencrypt;                                              
+        allow all;                                                              
+    }
+
 Role Variables
 --------------
 
