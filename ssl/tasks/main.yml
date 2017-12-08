@@ -6,7 +6,7 @@
   become: true
 
 - name: Get a certificate
-  command: "certbot certonly --standalone -m {{ ssl_certbot_mail }} --agree-tos -d {{ item.value|join(' -d ') }}"
+  command: "certbot certonly --webroot -m {{ ssl_certbot_mail }} --agree-tos -d {{ item.value|join(' -d ') }}"
   args:
     creates: /etc/letsencrypt/live/{{ item.key }}/fullchain.pem
   with_dict: "{{ ssl_domains }}"
