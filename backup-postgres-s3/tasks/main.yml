@@ -8,7 +8,7 @@
 - name: Ensure backup script is installed
   template:
     src: templates/backup.j2
-    dest: /etc/cron.daily/backup
+    dest: /etc/cron.daily/backup-postgres-s3
     remote_src: no
     mode: 0755
   become: true
