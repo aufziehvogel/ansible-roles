@@ -28,7 +28,8 @@
 
 - name: Ensure Snapshot Repository is setup in Elasticsearch
   shell: "curl -XPUT http://{{ backup_elasticsearch_s3_host }}:{{ backup_elasticsearch_s3_port }}/_snapshot/backup -d '{\"type\": \"fs\", \"settings\": {\"location\": \"{{ backup_elasticsearch_s3_snapdir }}\"}}' >> {{ backup_elasticsearch_s3_createdfile }}"
-  creates: "{{ backup_elasticsearch_s3_createdfile }}"
+  args:
+    creates: "{{ backup_elasticsearch_s3_createdfile }}"
 
 - name: Ensure backup script is installed
   template:
