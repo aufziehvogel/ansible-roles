@@ -52,3 +52,10 @@
     regexp: '^vm.max_map_count'
     line: 'vm.max_map_count=262144'
   become: true
+
+- name: Listen to defined interface
+  lineinfile:
+    path: /opt/elasticsearch/elasticsearch-5.5.2/config/elasticsearch.yml
+    regexp: '^network.host'
+    line: 'network.host: {{ elasticsearch_bind }}'
+  when: elasticsearch_bind != ""

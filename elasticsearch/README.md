@@ -15,6 +15,8 @@ Role Variables
 
 - `elasticsearch_user`: The user which should run elasticsearch
 - `elasticsearch_group`: The group which should run elasticsearch
+- `elasticsearch_bind`: Set the interface to which you want to bind or empty
+  to keep the default config (`0.0.0.0` for all interfaces)
 
 Example Playbook
 ----------------
