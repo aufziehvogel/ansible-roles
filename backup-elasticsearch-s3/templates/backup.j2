@@ -6,7 +6,7 @@ filepath="{{ backup_elasticsearch_s3_tmpdir }}/$filename"
 
 curl -XPUT http://{{ backup_elasticsearch_s3_host }}:{{ backup_elasticsearch_s3_port }}/_snapshot/backup/${now}?wait_for_completion=true
 
-tar -zcf $filepath . -C {{ backup_elasticsearch_s3_snapdir }}
+tar -zcf $filepath $(basename "{{ backup_elasticsearch_s3_snapdir }}") -C $(dirname "{{ backup_elasticsearch_s3_snapdir }}")
 
 su -c "aws s3 cp $filepath s3://{{ backup_elasticsearch_s3_bucket }}/elasticsearch/${filename}" {{ backup_elasticsearch_s3_s3_user }}
 
