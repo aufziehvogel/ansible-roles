@@ -8,7 +8,7 @@ curl -XPUT http://{{ backup_elasticsearch_s3_host }}:{{ backup_elasticsearch_s3_
 
 tar -zcf $filepath . -C {{ backup_elasticsearch_s3_snapdir }}
 
-su -c "aws s3 cp $filepath s3://{{ backup_elasticsearch_s3_bucket }}/elasticsearch/${filename}.gz" {{ backup_elasticsearch_s3_s3_user }}
+su -c "aws s3 cp $filepath s3://{{ backup_elasticsearch_s3_bucket }}/elasticsearch/${filename}" {{ backup_elasticsearch_s3_s3_user }}
 
 rm $filepath
 
