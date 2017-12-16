@@ -1,0 +1,39 @@
+---
+- name: Ensure aws-cli is installed
+  package:
+    name: awscli
+    state: present
+  become: true
+
+- name: Ensure snapshot directory is registered in elasticsearch config
+  lineinfile:
+    path: "{{ backup_elasticsearch_s3_config }}"
+    regexp: "^path.repo"
+    line: 'path.repo: ["{{ backup_elasticsearch_s3_snapdir }}"]'
+  register: elasticsearch_snapshotdir_installed
+
+- name: Restart elasticsearch after snapshotdir configuration change
+  service:
+    name: elasticsearch
+    state: restarted
+  become: true
+  when: elasticsearch_snapshotdir_installed|changed
+
+- name: Wait for server to restart
+  wait_for:
+    host: localhost
+    port: 9200
+    delay: 1
+    timeout: 300
+
+- name: Ensure Snapshot Repository is setup in Elasticsearch
+  shell: "curl -XPUT http://{{ backup_elasticsearch_s3_host }}:{{ backup_elasticsearch_s3_port }}/_snapshot/backup -d '{\"type\": \"fs\", \"settings\": {\"location\": \"{{ backup_elasticsearch_s3_snapdir }}\"}}' >> {{ backup_elasticsearch_s3_createdfile }}"
+  creates: "{{ backup_elasticsearch_s3_createdfile }}"
+
+- name: Ensure backup script is installed
+  template:
+    src: templates/backup.j2
+    dest: /etc/cron.weekly/backup-elasticsearch-s3
+    remote_src: no
+    mode: 0755
+  become: true
