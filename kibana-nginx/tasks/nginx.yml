@@ -1,0 +1,30 @@
+---
+- name: Ensure nginx is installed
+  package:
+    name: nginx
+    state: latest
+  become: true
+  notify: Start Nginx
+
+- name: Ensure site configuration is available for nginx
+  template:
+    src: templates/kibana_nginx.conf
+    dest: /etc/nginx/sites-available/kibana.conf
+    mode: 0644
+  become: true
+  notify: Restart Nginx
+
+- name: Ensure site is enabled in nginx
+  file:
+    src: /etc/nginx/sites-available/kibana.conf
+    dest: /etc/nginx/sites-enabled/kibana.conf
+    state: link
+  become: true
+  notify: Restart Nginx
+
+- name: Ensure htpasswd file is available
+  copy:
+    src: files/htpasswd
+    dest: /etc/nginx/conf.d/.htpasswd.kibana
+  become: true
+  notify: Restart Nginx

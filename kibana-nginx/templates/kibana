@@ -1,0 +1,62 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          kibana
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Starts kibana
+# Description:       Starts kibana using start-stop-daemon
+### END INIT INFO
+
+KIBANA_HOME=/opt/kibana/kibana-5.5.2-linux-x86_64
+DAEMON=$KIBANA_HOME/bin/kibana
+NAME=kibana
+DESC=kibana
+PID_FILE=$KIBANA_HOME/$NAME.pid
+LOG_DIR=$KIBANA_HOME/logs
+DATA_DIR=$KIBANA_HOME/data
+WORK_DIR=/tmp/$NAME
+CONF_DIR=/etc/$NAME
+ES_USER={{ kibana_nginx_user }}
+ES_GROUP={{ kibana_nginx_group }}
+DAEMON_OPTS="-p $PID_FILE"
+
+
+test -x $DAEMON || exit 0
+
+set -e
+
+case "$1" in
+  start)
+    echo -n "Starting $DESC: "
+    mkdir -p $LOG_DIR $DATA_DIR $WORK_DIR
+    if start-stop-daemon --start --pidfile $PID_FILE --chuid $ES_USER:$ES_GROUP --background --startas $DAEMON -- $DAEMON_OPTS
+    then
+        echo "started."
+    else
+        echo "failed."
+    fi
+    ;;
+  stop)
+    echo -n "Stopping $DESC: "
+    if start-stop-daemon --stop --pidfile $PID_FILE
+    then
+        echo "stopped."
+    else
+        echo "failed."
+    fi
+    ;;
+  restart|force-reload)
+    ${0} stop
+    sleep 0.5
+    ${0} start
+    ;;
+  *)
+    N=/etc/init.d/$NAME
+    echo "Usage: $N {start|stop|restart|force-reload}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

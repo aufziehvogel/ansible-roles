@@ -1,0 +1,47 @@
+---
+- name: Ensure Java is installed
+  package:
+    name: openjdk-8-jre
+    state: present
+  become: true
+  register: javainstalled
+
+- name: Ensure target folder for kibana exists
+  file:
+    path: /opt/kibana
+    state: directory
+    owner: "{{ kibana_nginx_user }}"
+    group: "{{ kibana_nginx_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure Kibana is downloaded
+  get_url:
+    url: https://artifacts.elastic.co/downloads/kibana/kibana-5.5.2-linux-x86_64.tar.gz
+    dest: /opt/kibana/kibana-5.5.2-linux-x86_64.tar.gz
+    force: no
+  register: kibanadownloaded
+
+- name: Unzip the downloaded Kibana
+  unarchive:
+    src: /opt/kibana/kibana-5.5.2-linux-x86_64.tar.gz
+    dest: /opt/kibana/
+    remote_src: True
+  when: kibanadownloaded|changed
+
+- name: Ensure kibana init script is installed
+  template:
+    src: templates/kibana
+    dest: /etc/init.d/kibana
+    remote_src: no
+    mode: 0755
+  become: true
+  notify: Restart Kibana
+
+- name: Ensure kibana systemd script is installed
+  template:
+    src: templates/kibana.service
+    dest: /etc/systemd/system/kibana.service
+    remote_src: no
+  become: true
+  notify: Restart Kibana
