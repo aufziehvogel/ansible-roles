@@ -23,8 +23,8 @@
   notify: Restart Nginx
 
 - name: Ensure htpasswd file is available
-  copy:
-    src: files/htpasswd
+  template:
+    src: templates/htpasswd
     dest: /etc/nginx/conf.d/.htpasswd.kibana
   become: true
   notify: Restart Nginx
