@@ -1,0 +1,27 @@
+---
+- name: Ensure Jupyter Notebook is installed
+  package:
+    name: jupyter-notebook
+    state: present
+  become: true
+
+- name: Ensure Jupyter configuration folder exists
+  file:
+    path: "/home/{{ jupyter_user }}/.jupyter"
+    state: directory
+    owner: "{{ jupyter_user }}"
+    group: "{{ jupyter_group }}"
+    mode: 0755
+
+- name: Ensure Jupyter configuration with password is set
+  template:
+    src: templates/jupyter_notebook_config.py
+    dest: "/home/{{ jupyter_user }}/.jupyter/jupyter_notebook_config.py"
+
+- name: Ensure Jupyter notebooks folder exists
+  file:
+    path: "{{ jupyter_notebooks_dir }}"
+    state: directory
+    owner: "{{ jupyter_user }}"
+    group: "{{ jupyter_group }}"
+    mode: 0755

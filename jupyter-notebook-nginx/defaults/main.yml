@@ -1,0 +1,9 @@
+---
+jupyter_user: jupyter
+jupyter_group: jupyter
+jupyter_passwordhash: ""
+jupyter_nginx_listen_port: 80
+jupyter_nginx_server_name: example.com
+jupyter_nginx_login_username: ""
+jupyter_nginx_login_passwordhash: ""
+jupyter_notebooks_dir: /

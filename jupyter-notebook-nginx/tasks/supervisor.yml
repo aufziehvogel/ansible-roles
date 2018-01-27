@@ -1,0 +1,13 @@
+- name: Ensure supervisord is installed for gunicorn
+  package:
+    name: supervisor
+    state: latest
+  become: true
+  notify: Start supervisor
+
+- name: Ensure supervisor script is installed
+  template:
+    src: templates/jupyter_supervisor.conf
+    dest: /etc/supervisor/conf.d/jupyter_notebook.conf
+  become: true
+  notify: Restart supervisor

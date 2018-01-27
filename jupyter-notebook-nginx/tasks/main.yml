@@ -1,0 +1,4 @@
+---
+- import_tasks: nginx.yml tags=nginx
+- import_tasks: jupyter.yml tags=jupyter
+- import_tasks: supervisor.yml tags=supervisor
