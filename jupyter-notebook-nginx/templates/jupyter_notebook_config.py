@@ -45,7 +45,7 @@
 #  Use '*' to allow any origin to access your server.
 #  
 #  Takes precedence over allow_origin_pat.
-#c.NotebookApp.allow_origin = ''
+c.NotebookApp.allow_origin = '*'
 
 ## Use a regular expression for the Access-Control-Allow-Origin header
 #  
@@ -191,7 +191,7 @@
 #    from notebook.auth import passwd; passwd()
 #  
 #  The string should be of the form type:salt:hashed-password.
-c.NotebookApp.password = {{ jupyter_passwordhash }}
+c.NotebookApp.password = "{{ jupyter_passwordhash }}"
 
 ## The port the notebook server will listen on.
 #c.NotebookApp.port = 8888
