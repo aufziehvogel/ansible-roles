@@ -1,0 +1,13 @@
+---
+- name: Ensure nginx is installed
+  package:
+    name: nginx
+    state: latest
+  become: true
+  notify: Start Nginx
+
+- name: Ensure ssl snippet is installed
+  copy:
+    src: files/ssl-params.conf
+    dest: /etc/nginx/snippets/ssl-params.conf
+  become: true

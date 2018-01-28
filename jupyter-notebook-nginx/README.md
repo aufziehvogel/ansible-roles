@@ -10,7 +10,7 @@ Requirements
 The system has to be a Debian system (or another system that has a package
 called `jupyter-notebook`).
 
-Nginx must be installed on the system.
+You also need to setup the roles nginx and SSL to use this role.
 
 Role Variables
 --------------
@@ -27,10 +27,15 @@ Role Variables
 Example Playbook
 ----------------
 
-Using this role in a playbook is as simple as:
+To use this role in a playbook, you have to install the other required roles,
+too. Moreover, you'll have to point to a vars file to use for the SSL role.
 
     - hosts: database
+      vars_files:
+         - "vars/ssl_jupyter.yml"
       roles:
+         - ssl
+         - nginx
          - jupyter-notebook-nginx
 
 License

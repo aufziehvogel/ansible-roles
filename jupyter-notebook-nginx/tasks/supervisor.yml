@@ -1,4 +1,4 @@
-- name: Ensure supervisord is installed for gunicorn
+- name: Ensure supervisord is installed
   package:
     name: supervisor
     state: latest
