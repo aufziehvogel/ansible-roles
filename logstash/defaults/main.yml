@@ -3,3 +3,4 @@ logstash_beats_port: 5044
 logstash_tcp_port: 5040
 logstash_gelf_port: 5041
 logstash_elasticsearch_host: localhost:9200
+logstash_retain_days: 30

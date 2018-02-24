@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+curator_cli delete_indices --filter_list '[{"filtertype": "pattern", "kind": "prefix", "value": "logstash-"}, {"filtertype": "age", "source": "name", "direction": "older", "timestring": "%Y.%m.%d", "unit": "days", "unit_count": {{ logstash_retain_days }}}]'

@@ -15,6 +15,12 @@
     dest: /etc/apt/sources.list.d/elastic-5.x.list
   become: true
 
+- name: Add repository definition for curator
+  copy:
+    src: files/curator.list
+    dest: /etc/apt/sources.list.d/curator.list
+  become: true
+
 - name: Ensure that logstash is installed
   package:
     name: logstash
@@ -22,6 +28,13 @@
     update_cache: yes
   become: true
   notify: Start Logstash
+
+- name: Ensure that curator is installed
+  package:
+    name: elasticsearch-curator
+    state: present
+    update_cache: yes
+  become: true
 
 - name: Ensure that beats input plugin is installed
   template:
@@ -45,4 +58,12 @@
   template:
     src: templates/70-output-elasticsearch.conf
     dest: /etc/logstash/conf.d/70-output-elasticsearch.conf
+  become: true
+
+- name: Ensure that curator cleanup script is installed
+  template:
+    src: templates/elasticsearch-curator-cleanup.j2
+    dest: /etc/cron.daily/elasticsearch-curator-cleanup
+    remote_src: no
+    mode: 0755
   become: true

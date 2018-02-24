@@ -10,6 +10,8 @@ Role Variables
 - `logstash_beats_port`: The port used for communication with beats
 - `logstash_tcp_port`: The port used to receive tcp messages
 - `logstash_elasticsearch_host`: The host address of the elasticsearch server
+- `logstash_retain_days`: Number of days after which log events should be
+  deleted
 
 Prerequisites
 -------------
