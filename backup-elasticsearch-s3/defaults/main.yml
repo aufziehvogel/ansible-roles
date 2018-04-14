@@ -6,4 +6,5 @@ backup_elasticsearch_s3_snapdir: /tmp/elasticsearch_snapshots
 backup_elasticsearch_s3_tmpdir: /tmp
 backup_elasticsearch_s3_bucket: backup
 backup_elasticsearch_s3_s3_user: elasticsearch
-backup_elasticsearch_s3_healthchecks_url: http://localhost/
+backup_elasticsearch_s3_healthchecks_urls:
+  - http://localhost/

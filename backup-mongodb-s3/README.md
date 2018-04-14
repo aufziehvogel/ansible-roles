@@ -19,8 +19,8 @@ Role Variables
   intermediate file
 - `backup_mongodb_s3_bucket`: The bucket to which the file should be uploaded
 - `backup_mongodb_s3_s3_user`: The user to be used for upload to S3
-- `backup_mongodb_s3_healthchecks_url`: The healthchecks.io to signal when
-  the job was run
+- `backup_mongodb_s3_healthchecks_urls`: A list of URLs that should be queried
+  (GET) when the job was run
 
 Example Playbook
 ----------------

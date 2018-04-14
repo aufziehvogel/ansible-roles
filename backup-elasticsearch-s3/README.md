@@ -27,7 +27,7 @@ Role Variables
 - `backup_elasticsearch_s3_createdfile`: A file where we can check whether
   the snapshot task has already been created
 - `backup_elasticsearch_s3_s3_user`: The user to be used for upload to S3
-- `backup_elasticsearch_s3_healthchecks_url`: The healthchecks.io to signal
+- `backup_elasticsearch_s3_healthchecks_urls`: A list of URLs to query (GET)
   when the job was run
 
 Example Playbook

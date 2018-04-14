@@ -12,4 +12,6 @@ su -c "aws s3 cp $filepath s3://{{ backup_elasticsearch_s3_bucket }}/elasticsear
 
 rm $filepath
 
-curl -fsS --retry 3 {{ backup_elasticsearch_s3_healthchecks_url }} > /dev/null
+{% for url in backup_elasticsearch_s3_healthchecks_urls %}
+    curl -fsS --retry 3 {{ url }} > /dev/null
+{% endfor %}
