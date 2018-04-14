@@ -1,38 +1,3 @@
-- name: Ensure Python3 is installed
-  package:
-    name: python3
-    state: latest
-  become: true
-
-- name: Ensure project is latest state
-  git:
-    repo: https://github.com/aufziehvogel/pidar.git
-    dest: "{{ pidar_install_dir }}"
-    force: yes
-  notify: Restart supervisor
-
-- name: Ensure production settings are set
-  template:
-    src: templates/dotenv
-    dest: "{{ pidar_install_dir }}/.env"
-  notify: Restart supervisor
-
-- name: Ensure virtualenv is available and prepared
-  pip:
-    virtualenv: "{{ pidar_install_dir }}/env"
-    virtualenv_python: python3
-    requirements: "{{ pidar_install_dir }}/requirements.txt"
-
-- name: Ensure package is installed, so that we have CLI command
-  pip:
-    name: "{{ pidar_install_dir}}"
-    virtualenv: "{{ pidar_install_dir }}/env"
-
-- name: Ensure psycopg2 is available for Postgres connection
-  pip:
-    name: psycopg2
-    virtualenv: "{{ pidar_install_dir }}/env"
-
 # uwsgi has trouble with SSL, see
 # https://github.com/unbit/uwsgi/issues/1569
 # use gunicorn in the meantime
