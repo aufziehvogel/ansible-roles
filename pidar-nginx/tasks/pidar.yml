@@ -30,7 +30,7 @@
 
 - name: Ensure psycopg2 is available for Postgres connection
   pip:
-    name: psycopg2
+    name: psycopg2-binary
     virtualenv: "{{ pidar_install_dir }}/env"
 
 - name: Cronjob for Notifications
