@@ -1,0 +1,13 @@
+---
+pidar_user: pidar
+pidar_group: pidar
+pidar_nginx_port: 80
+pidar_nginx_ssl_port: 443
+pidar_nginx_server_name: example.com
+pidar_install_dir: /opt/pidar
+pidar_gunicorn_port: 30134
+pidar_dbconn: sqlite:///pidar.sqlite
+pidar_mail_host: localhost
+pidar_mail_user: ""
+pidar_mail_password: ""
+pidar_mail_sender: pidar@example.com

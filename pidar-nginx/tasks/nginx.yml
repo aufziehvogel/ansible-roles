@@ -1,0 +1,23 @@
+---
+- name: Ensure nginx is installed
+  package:
+    name: nginx
+    state: latest
+  become: true
+  notify: Start Nginx
+
+- name: Ensure site configuration is available for nginx
+  template:
+    src: templates/pidar_nginx.conf
+    dest: /etc/nginx/sites-available/pidar.conf
+    mode: 0644
+  become: true
+  notify: Restart Nginx
+
+- name: Ensure site is enabled in nginx
+  file:
+    src: /etc/nginx/sites-available/pidar.conf
+    dest: /etc/nginx/sites-enabled/pidar.conf
+    state: link
+  become: true
+  notify: Restart Nginx
