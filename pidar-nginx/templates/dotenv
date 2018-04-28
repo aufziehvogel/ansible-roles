@@ -1,6 +1,12 @@
+SECRET_KEY="{{ pidar_secret_key }}"
+
 DB_CONN="{{ pidar_dbconn }}"
 
 MAIL_HOST="{{ pidar_mail_host }}"
 MAIL_USER="{{ pidar_mail_user }}"
 MAIL_PASSWORD="{{ pidar_mail_password }}"
 MAIL_SENDER="{{ pidar_mail_sender }}"
+
+WEBSITE_URL_HTTPS="{{ pidar_website_url_https }}"
+DEFAULT_PLAN="{{ pidar_default_plan_name }}"
+DEFAULT_PLAN_PINGS={{ pidar_default_plan_pings }}
