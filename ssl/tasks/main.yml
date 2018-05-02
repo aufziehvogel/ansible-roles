@@ -5,13 +5,9 @@
     state: latest
   become: true
 
-- name: Get a certificate
-  command: "certbot certonly --webroot -w /var/www/letsencrypt -m {{ ssl_certbot_mail }} --agree-tos -d {{ item.value|join(' -d ') }}"
-  args:
-    creates: /etc/letsencrypt/live/{{ item.key }}/fullchain.pem
+- include: "request_ssl.yml"
   with_dict: "{{ ssl_domains }}"
-  become: true
- 
+
 - name: Ensure CA certificate is available
   get_url:
     url: https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem.txt

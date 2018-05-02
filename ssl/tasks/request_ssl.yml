@@ -1,0 +1,31 @@
+- name: Check if SSL was already requested
+  stat:
+    path: /etc/letsencrypt/live/{{ item.key }}/fullchain.pem
+  register: ssl_cert
+  become: true
+
+- name: Setup mini nginx configuration to fetch certificate
+  template:
+    src: templates/mini_nginx.conf
+    dest: "/etc/nginx/sites-enabled/{{ item.key }}.conf"
+  become: true
+  when: ssl_cert.stat.exists == False
+
+- name: Ensure latest nginx configuration is loaded
+  service:
+    name: nginx
+    state: reloaded
+  become: true
+  when: ssl_cert.stat.exists == False
+
+- name: Get a certificate
+  command: "certbot certonly --webroot -w /var/www/letsencrypt -m {{ ssl_certbot_mail }} --agree-tos -d {{ item.value|join(' -d ') }}"
+  args:
+    creates: "/etc/letsencrypt/live/{{ item.key }}/fullchain.pem"
+  become: true
+
+- name: Remove mini nginx configuration
+  file:
+    state: absent
+    path: "/etc/nginx/sites-enabled/{{ item.key }}.conf"
+  become: true
