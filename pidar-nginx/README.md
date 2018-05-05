@@ -26,6 +26,9 @@ Role Variables
 - `pidar_mail_user`: The user that should be used to login to SMTP
 - `pidar_mail_password`: The password that should be used to login to SMTP
 - `pidar_mail_sender`: The mail address that should be used to send mails
+- `pidar_email_healthchecks_url`: A HTTP endpoint to query after each
+  successful email notification check
+  
 
 Example Playbook
 ----------------
