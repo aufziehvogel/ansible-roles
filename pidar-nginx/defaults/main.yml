@@ -11,6 +11,7 @@ pidar_mail_host: localhost
 pidar_mail_user: ""
 pidar_mail_password: ""
 pidar_mail_sender: pidar@example.com
+pidar_email_healtchecks_url: http://localhost/
 pidar_matomo_enabled: 'false'
 pidar_matomo_host: 'localhost'
 pidar_matomo_siteid: 1

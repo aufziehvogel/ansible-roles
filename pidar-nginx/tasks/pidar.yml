@@ -37,5 +37,5 @@
   cron:
     name: "pidar-notification"
     minute: "*"
-    job: "bash -c 'source {{ pidar_install_dir }}/env/bin/activate && pidar send_mail_notifications'"
+    job: "bash -c 'source {{ pidar_install_dir }}/env/bin/activate && pidar send_mail_notifications' && curl {{ pidar_email_healthchecks_url }} > /dev/null"
     state: present
