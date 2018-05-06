@@ -10,3 +10,7 @@ MAIL_SENDER="{{ pidar_mail_sender }}"
 WEBSITE_URL_HTTPS="{{ pidar_website_url_https }}"
 DEFAULT_PLAN="{{ pidar_default_plan_name }}"
 DEFAULT_PLAN_PINGS={{ pidar_default_plan_pings }}
+
+MATOMO_ENABLED="{{ pidar_matomo_enabled }}"
+MATOMO_HOST="{{ pidar_matomo_host }}"
+MATOMO_SITEID={{ pidar_matomo_siteid }}

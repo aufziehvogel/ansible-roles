@@ -26,6 +26,10 @@ Role Variables
 - `pidar_mail_user`: The user that should be used to login to SMTP
 - `pidar_mail_password`: The password that should be used to login to SMTP
 - `pidar_mail_sender`: The mail address that should be used to send mails
+- `pidar_matomo_enabled`: Either true or false to enable or disable matomo
+  user logging
+- `pidar_matomo_host`: The hostname of your matomo host
+- `pidar_matomo_siteid`: The siteid of this site that was assigned by matomo
 
 Example Playbook
 ----------------
