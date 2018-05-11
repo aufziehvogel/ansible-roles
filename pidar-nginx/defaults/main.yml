@@ -15,3 +15,4 @@ pidar_email_healtchecks_url: http://localhost/
 pidar_matomo_enabled: 'false'
 pidar_matomo_host: 'localhost'
 pidar_matomo_siteid: 1
+pidar_admin_legal_address: "Somewhere"

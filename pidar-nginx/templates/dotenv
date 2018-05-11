@@ -7,6 +7,8 @@ MAIL_USER="{{ pidar_mail_user }}"
 MAIL_PASSWORD="{{ pidar_mail_password }}"
 MAIL_SENDER="{{ pidar_mail_sender }}"
 
+ADMIN_LEGAL_ADDRESS="{{ pidar_admin_legal_address }}"
+
 WEBSITE_URL_HTTPS="{{ pidar_website_url_https }}"
 DEFAULT_PLAN="{{ pidar_default_plan_name }}"
 DEFAULT_PLAN_PINGS={{ pidar_default_plan_pings }}

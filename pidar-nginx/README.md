@@ -32,6 +32,8 @@ Role Variables
   user logging
 - `pidar_matomo_host`: The hostname of your matomo host
 - `pidar_matomo_siteid`: The siteid of this site that was assigned by matomo
+- `pidar_admin_legal_address`: The address of the admin that should be
+  displayed on the About page (required in some jurisdictions)
 
 Example Playbook
 ----------------
