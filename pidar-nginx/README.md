@@ -22,6 +22,10 @@ Role Variables
   communicate
 - `pidar_dbconn`: The database connection string that should be used, e.g.
   `sqlite:///pidar.sqlite` or `postgresql://user:pw@host/database`
+- `pidar_default_plan_name`: The name of the default plan that a user should
+  be assigned to on registration
+- `pidar_default_plan_pings`: The number of pings available on the default plan
+- `pidar_default_plan_polls`: The number of polls available on the default plan
 - `pidar_mail_host`: The SMTP server that should be used to send mails
 - `pidar_mail_user`: The user that should be used to login to SMTP
 - `pidar_mail_password`: The password that should be used to login to SMTP
