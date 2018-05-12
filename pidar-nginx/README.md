@@ -32,8 +32,14 @@ Role Variables
   user logging
 - `pidar_matomo_host`: The hostname of your matomo host
 - `pidar_matomo_siteid`: The siteid of this site that was assigned by matomo
+- `pidar_matomo_deletion_days`: The number of days after which you will delete
+  personal data from matomo
 - `pidar_admin_legal_address`: The address of the admin that should be
   displayed on the About page (required in some jurisdictions)
+- `pidar_admin_email_address`: The e-mail address at which you can be reached
+  for official requests
+- `pidar_legal_gdpr_enabled`: Either true or false to enable or disable GDPR
+  information on the website
 
 Example Playbook
 ----------------

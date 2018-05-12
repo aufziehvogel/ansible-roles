@@ -15,4 +15,7 @@ pidar_email_healtchecks_url: http://localhost/
 pidar_matomo_enabled: 'false'
 pidar_matomo_host: 'localhost'
 pidar_matomo_siteid: 1
+pidar_matomo_deletion_days: 365
 pidar_admin_legal_address: "Somewhere"
+pidar_admin_email_address: "pidar@example.com"
+pidar_legal_gdpr_enabled: 'false'

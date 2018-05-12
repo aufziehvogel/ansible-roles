@@ -8,6 +8,8 @@ MAIL_PASSWORD="{{ pidar_mail_password }}"
 MAIL_SENDER="{{ pidar_mail_sender }}"
 
 ADMIN_LEGAL_ADDRESS="{{ pidar_admin_legal_address }}"
+ADMIN_EMAIL_ADDRESS="{{ pidar_admin_email_address }}"
+LEGAL_GDPR_ENABLED="{{ pidar_legal_gdpr_enabled }}"
 
 WEBSITE_URL_HTTPS="{{ pidar_website_url_https }}"
 DEFAULT_PLAN="{{ pidar_default_plan_name }}"
@@ -16,3 +18,4 @@ DEFAULT_PLAN_PINGS={{ pidar_default_plan_pings }}
 MATOMO_ENABLED="{{ pidar_matomo_enabled }}"
 MATOMO_HOST="{{ pidar_matomo_host }}"
 MATOMO_SITEID={{ pidar_matomo_siteid }}
+MATOMO_DELETION_DAYS={{ pidar_matomo_deletion_days }}
