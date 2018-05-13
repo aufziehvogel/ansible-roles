@@ -39,3 +39,10 @@
     minute: "*"
     job: "bash -c 'source {{ pidar_install_dir }}/env/bin/activate && pidar send_mail_notifications' && curl {{ pidar_email_healthchecks_url }} > /dev/null"
     state: present
+
+- name: Cronjob for Polls
+  cron:
+    name: "pidar-polls"
+    minute: "*"
+    job: "bash -c 'source {{ pidar_install_dir }}/env/bin/activate && pidar execute-polls' && curl {{ pidar_polls_healthchecks_url }} > /dev/null"
+    state: present
