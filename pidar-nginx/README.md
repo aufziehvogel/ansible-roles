@@ -31,6 +31,8 @@ Role Variables
   be assigned to on registration
 - `pidar_default_plan_pings`: The number of pings available on the default plan
 - `pidar_default_plan_polls`: The number of polls available on the default plan
+- `pidar_default_plan_api_access`: Either true or false to enable or disable
+  API access on the default plan
 
 ### Mail related
 

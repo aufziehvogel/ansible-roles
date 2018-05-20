@@ -15,6 +15,7 @@ WEBSITE_URL_HTTPS="{{ pidar_website_url_https }}"
 DEFAULT_PLAN="{{ pidar_default_plan_name }}"
 DEFAULT_PLAN_PINGS={{ pidar_default_plan_pings }}
 DEFAULT_PLAN_POLLS={{ pidar_default_plan_polls }}
+DEFAULT_PLAN_API_ACCESS="{{ pidar_default_plan_api_access }}"
 
 MATOMO_ENABLED="{{ pidar_matomo_enabled }}"
 MATOMO_HOST="{{ pidar_matomo_host }}"
