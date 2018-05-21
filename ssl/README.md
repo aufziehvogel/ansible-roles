@@ -4,6 +4,9 @@ SSL
 This is a role to setup SSL with letsencrypt for multiple domains with
 haproxy on the frontend.
 
+This role will also provide a file `ssl/ssl_secure.conf` in the nginx
+directory which can be used from your roles to increase SSL security.
+
 Requirements
 ------------
 

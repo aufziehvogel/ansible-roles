@@ -15,6 +15,25 @@
     checksum: sha256:e446c5e9dbef9d09ac9f7027c034602492437a05ff6c40011d7235fca639c79a
   become: true
 
+- name: Make sure that SSL folder is available
+  file:
+    path: /etc/nginx/ssl
+    state: directory
+    mode: 0775
+  become: true
+
+- name: Make sure that dhparam.pem is available
+  command: openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+  args:
+    creates: /etc/nginx/ssl/dhparam.pem
+  become: true
+
+- name: Supply a snippet for better SSL security
+  copy:
+    src: files/ssl_secure.conf
+    dest: /etc/nginx/ssl/ssl_secure.conf
+  become: true
+
 - name: Ensure cronjob for certificate renewal is active
   copy:
     src: files/certificates-renew.sh
