@@ -19,6 +19,8 @@ Role Variables
 - `jupyter_group`: The group which should run jupyter
 - `jupyter_passwordhash`: The password hash for jupyter notebook
 - `jupyter_nginx_listen_port`: The port to which nginx should listen
+- `jupyter_nginx_listen_port_ssl`: The port to which nginx should listen for
+  SSL traffic
 - `jupyter_nginx_server_name`: The domain name you want to use
 - `jupyter_nginx_login_username`: The login username (Basic Auth)
 - `jupyter_nginx_login_passwordhash`: The password hash for basic auth
