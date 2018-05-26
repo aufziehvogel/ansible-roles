@@ -1,0 +1,31 @@
+---
+- name: Ensure nginx is installed
+  package:
+    name: nginx
+    state: latest
+  become: true
+  notify: Start Nginx
+
+- name: Ensure site configuration is available for nginx
+  template:
+    src: templates/nginx.conf
+    dest: "/etc/nginx/sites-available/{{ nginx_passthrough_name }}.conf"
+    mode: 0644
+  become: true
+  notify: Restart Nginx
+
+- name: Ensure site is enabled in nginx
+  file:
+    src: "/etc/nginx/sites-available/{{ nginx_passthrough_name }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ nginx_passthrough_name }}.conf"
+    state: link
+  become: true
+  notify: Restart Nginx
+
+- name: Ensure htpasswd file is available
+  template:
+    src: templates/htpasswd
+    dest: "/etc/nginx/conf.d/.htpasswd.{{ nginx_passthrough_name }}"
+  become: true
+  notify: Restart Nginx
+  when: nginx_passthrough_login_username is defined and nginx_passthrough_login_passwordhash is defined
