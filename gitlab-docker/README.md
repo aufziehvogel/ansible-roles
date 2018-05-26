@@ -17,6 +17,8 @@ Role Variables
   its data on the host machine
 - `gitlab_docker_http_port`: The port on which you want to expose the
   HTTP port from the docker container
+- `gitlab_docker_ssl_port`: The port on which you want to expose the SSH
+  connection
 
 Example Playbook
 ----------------

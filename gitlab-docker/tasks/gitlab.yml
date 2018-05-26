@@ -24,6 +24,7 @@
     recreate: no
     ports:
       - "{{ gitlab_docker_http_port }}:80"
+      - "{{ gitlab_docker_ssh_port }}:21"
     volumes:
       - "{{ gitlab_docker_data_dir }}/config:/etc/gitlab"
       - "{{ gitlab_docker_data_dir }}/logs:/var/log/gitlab"
