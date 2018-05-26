@@ -1,0 +1,31 @@
+---
+- name: Ensure pip is available
+  package:
+    name: python-pip
+    state: present
+  become: true
+ 
+- name: Ensure Python bindings for docker are available, required for ansible
+  pip:
+    name: docker-py
+  become: true
+
+- name: Ensure GitLab docker image is available
+  docker_image:
+    name: gitlab/gitlab-ce
+    tag: latest
+  become: true
+
+- name: Ensure GitLab container is running
+  docker_container:
+    name: gitlab
+    image: gitlab/gitlab-ce
+    state: started
+    recreate: no
+    ports:
+      - "{{ gitlab_docker_http_port }}:80"
+    volumes:
+      - "{{ gitlab_docker_data_dir }}/config:/etc/gitlab"
+      - "{{ gitlab_docker_data_dir }}/logs:/var/log/gitlab"
+      - "{{ gitlab_docker_data_dir }}/data:/var/opt/gitlab"
+  become: true
