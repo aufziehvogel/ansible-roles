@@ -6,7 +6,7 @@ This is a role to install the docker container of GitLab.
 Requirements
 ------------
 
-The system must be Debian stretch.
+The system must be Debian.
 
 Role Variables
 --------------
