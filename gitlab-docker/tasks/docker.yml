@@ -20,7 +20,7 @@
 - name: Ensure docker official GPG key is available
   copy:
     src: "files/docker_repo_gpg"
-    dest: "/opt/docker/docker-stretch-stable.gpg"
+    dest: "{{ gitlab_docker_data_dir }}/docker-stretch-stable.gpg"
   become: true
   register: gpgkey
 
