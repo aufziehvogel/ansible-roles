@@ -16,6 +16,6 @@
 - name: Ensure supervisor script is installed
   template:
     src: templates/pidar_supervisor.conf
-    dest: /etc/supervisor/conf.d/pidar.conf
+    dest: "/etc/supervisor/conf.d/{{ pidar_name }}.conf"
   become: true
   notify: Restart supervisor

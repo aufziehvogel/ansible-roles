@@ -9,15 +9,15 @@
 - name: Ensure site configuration is available for nginx
   template:
     src: templates/pidar_nginx.conf
-    dest: /etc/nginx/sites-available/pidar.conf
+    dest: "/etc/nginx/sites-available/{{ pidar_name }}.conf"
     mode: 0644
   become: true
   notify: Restart Nginx
 
 - name: Ensure site is enabled in nginx
   file:
-    src: /etc/nginx/sites-available/pidar.conf
-    dest: /etc/nginx/sites-enabled/pidar.conf
+    src: "/etc/nginx/sites-available/{{ pidar_name }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ pidar_name }}.conf"
     state: link
   become: true
   notify: Restart Nginx
