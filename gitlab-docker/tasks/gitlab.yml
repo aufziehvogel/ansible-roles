@@ -29,4 +29,5 @@
       - "{{ gitlab_docker_data_dir }}/config:/etc/gitlab"
       - "{{ gitlab_docker_data_dir }}/logs:/var/log/gitlab"
       - "{{ gitlab_docker_data_dir }}/data:/var/opt/gitlab"
+    hostname: "{{ gitlab_docker_hostname }}"
   become: true

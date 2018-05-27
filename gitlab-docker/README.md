@@ -19,6 +19,8 @@ Role Variables
   HTTP port from the docker container
 - `gitlab_docker_ssl_port`: The port on which you want to expose the SSH
   connection
+- `gitlab_docker_hostname`: The hostname under which the GitLab instance will
+  be reached, i.e. the external domain you use to reach GitLab
 
 Example Playbook
 ----------------
