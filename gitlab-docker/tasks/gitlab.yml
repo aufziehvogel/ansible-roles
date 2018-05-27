@@ -7,7 +7,7 @@
  
 - name: Ensure Python bindings for docker are available, required for ansible
   pip:
-    name: docker-py
+    name: docker
   become: true
 
 - name: Ensure GitLab docker image is available
