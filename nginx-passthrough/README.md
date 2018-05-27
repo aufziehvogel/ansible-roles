@@ -20,6 +20,8 @@ Role Variables
   folder names
 - `nginx_passthrough_server_name`: The server DNS name to which nginx should
   listen
+- `nginx_passthrough_target_host`: The hostname to which nginx should relay the
+  traffic
 - `nginx_passthrough_target_port`: The target port of your service to which
   nginx should relay the traffic
 
