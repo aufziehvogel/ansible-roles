@@ -1,0 +1,34 @@
+---
+- name: Ensure pip is available
+  package:
+    name: python-pip
+    state: present
+  become: true
+ 
+- name: Ensure Python bindings for docker are available, required for ansible
+  pip:
+    name: docker
+  become: true
+
+- name: Ensure GitLab Runner docker image is available
+  docker_image:
+    name: gitlab/gitlab-runner
+    tag: alpine
+  become: true
+
+- name: Ensure GitLab Runner container is running
+  docker_container:
+    name: gitlab-runner
+    image: gitlab/gitlab-runner
+    state: started
+    recreate: no
+    volumes:
+      - "{{ gitlab_runner_docker_data_dir }}/config:/etc/gitlab-runner"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+  become: true
+  register: gitlab_runner_container
+
+- name: Ensure GitLab Runner is registered on GitLab
+  command: 'docker run --rm -v {{ gitlab_runner_docker_data_dir }}/config:/etc/gitlab-runner --name gitlab-runner-registration gitlab/gitlab-runner register --non-interactive --executor "docker" --docker-image alpine:3 --url "{{ gitlab_runner_docker_url }}" --registration-token "{{ gitlab_runner_docker_registration_token }}" --description "{{ gitlab_runner_docker_description }}" --tag-list "{{ gitlab_runner_docker_tags }}" --run-untagged --locked="false"'
+  become: true
+  when: gitlab_runner_container is changed

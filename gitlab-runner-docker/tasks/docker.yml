@@ -1,0 +1,51 @@
+---
+- name: Ensure dependency packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  become: true
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg2
+    - software-properties-common
+
+- name: Ensure we have a directory for docker related files
+  file:
+    path: "{{ gitlab_runner_docker_data_dir }}"
+    state: directory
+  become: true
+
+- name: Ensure docker official GPG key is available
+  copy:
+    src: "files/docker_repo_gpg"
+    dest: "{{ gitlab_runner_docker_data_dir }}/docker-stretch-stable.gpg"
+  become: true
+  register: gpgkey
+
+- name: Ensure GPG key is installed
+  command: apt-key add /opt/docker/docker-stretch-stable.gpg
+  become: true
+  when: gpgkey is changed
+  register: dockerrepo
+
+- name: Ensure docker repository is set up
+  template:
+    src: "templates/docker.list.j2"
+    dest: "/etc/apt/sources.list.d/docker.list"
+  become: true
+  register: dockerrepo
+
+- name: Ensure repository is updated
+  apt:
+    update_cache: yes
+  become: true
+  when: dockerrepo is changed
+
+- name: Ensure docker is available
+  package:
+    name: docker-ce
+    state: present
+  become: true
+  notify: Start Docker
