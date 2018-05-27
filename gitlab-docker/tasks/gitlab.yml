@@ -16,7 +16,7 @@
     tag: latest
   become: true
 
-- name: Ensure GitLab container is running
+- name: Ensure GitLab container is running (public)
   docker_container:
     name: gitlab
     image: gitlab/gitlab-ce
@@ -31,3 +31,20 @@
       - "{{ gitlab_docker_data_dir }}/data:/var/opt/gitlab"
     hostname: "{{ gitlab_docker_hostname }}"
   become: true
+  when: gitlab_docker_http_public
+
+- name: Ensure GitLab container is running (non-public)
+  docker_container:
+    name: gitlab
+    image: gitlab/gitlab-ce
+    state: started
+    recreate: no
+    ports:
+      - "{{ gitlab_docker_ssh_port }}:22"
+    volumes:
+      - "{{ gitlab_docker_data_dir }}/config:/etc/gitlab"
+      - "{{ gitlab_docker_data_dir }}/logs:/var/log/gitlab"
+      - "{{ gitlab_docker_data_dir }}/data:/var/opt/gitlab"
+    hostname: "{{ gitlab_docker_hostname }}"
+  become: true
+  when: not gitlab_docker_http_public

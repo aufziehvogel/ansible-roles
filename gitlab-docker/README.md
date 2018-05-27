@@ -15,10 +15,13 @@ Role Variables
   (e.g. stretch)
 - `gitlab_docker_data_dir`: The directory in which you want GitLab to store
   its data on the host machine
+- `gitlab_docker_http_public`: Whether or not you want to expose this instance
+  publicly through the host
 - `gitlab_docker_http_port`: The port on which you want to expose the
-  HTTP port from the docker container
+  HTTP port from the docker container (only used if `gitlab_docker_http_public`
+  is true)
 - `gitlab_docker_ssl_port`: The port on which you want to expose the SSH
-  connection
+  connection (always used)
 - `gitlab_docker_hostname`: The hostname under which the GitLab instance will
   be reached, i.e. the external domain you use to reach GitLab
 
