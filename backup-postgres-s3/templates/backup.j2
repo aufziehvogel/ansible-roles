@@ -7,8 +7,20 @@ filepath="{{ backup_postgres_s3_tmpdir }}/$filename"
 su -c "pg_dumpall > $filepath" {{ backup_postgres_s3_db_user }} 
 gzip $filepath
 
-su -c "aws s3 cp $filepath.gz s3://{{ backup_postgres_s3_bucket }}/postgres/${filename}.gz" {{ backup_postgres_s3_s3_user }}
+# filename now has a gz suffix
+filename=${filename}.gz
+filepath=${filepath}.gz
 
-rm $filepath.gz
+{% if backup_postgres_s3_gpgkey %}
+su -c "gpg --encrypt --recipient {{ backup_postgres_s3_gpgkey_mail }} --trust-model always $filepath" {{ backup_postgres_s3_s3_user }}
+
+# filename now has a gpg suffix
+filename=${filename}.gpg
+filepath=${filepath}.gpg
+{% endif %}
+
+su -c "aws s3 cp $filepath s3://{{ backup_postgres_s3_bucket }}/postgres/${filename}" {{ backup_postgres_s3_s3_user }}
+
+rm $filepath
 
 curl -fsS --retry 3 {{ backup_postgres_s3_healthchecks_url }} > /dev/null
