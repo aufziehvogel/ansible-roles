@@ -1,5 +1,5 @@
-jupyter-notebook-nginx
-======================
+gitlab-docker
+=============
 
 This is a role to install the docker container of GitLab.
 

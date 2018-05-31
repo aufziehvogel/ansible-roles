@@ -1,5 +1,5 @@
-jupyter-notebook-nginx
-======================
+nginx-passthrough
+=================
 
 This is a role to have nginx pass through HTTP traffic to another system
 or serve as an HTTPS endpoint and pass on the traffic via HTTP to another
