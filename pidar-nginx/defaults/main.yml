@@ -1,4 +1,5 @@
 ---
+pidar_name: pidar
 pidar_user: pidar
 pidar_group: pidar
 pidar_nginx_port: 80

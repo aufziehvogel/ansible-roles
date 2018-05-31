@@ -1,5 +1,6 @@
 ---
 gitlab_docker_debian_version: stretch
 gitlab_docker_data_dir: /opt/gitlab
+gitlab_docker_http_public: true
 gitlab_docker_http_port: 80
 gitlab_docker_ssh_port: 22

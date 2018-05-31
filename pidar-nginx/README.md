@@ -14,6 +14,8 @@ Role Variables
 
 ### System related
 
+- `pidar_name`: A name for the instance which will be used for filenames
+  on the filesystem
 - `pidar_user`: The user which should run pidar
 - `pidar_group`: The group which should run pidar
 - `pidar_nginx_port`: The non-SSL port to which nginx should listen
