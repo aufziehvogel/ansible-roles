@@ -27,7 +27,7 @@
     src: /opt/elasticsearch/elasticsearch-5.5.2.tar.gz
     dest: /opt/elasticsearch/
     remote_src: True
-  when: elasticsearchdownloaded|changed
+  when: elasticsearchdownloaded is changed
 
 - name: Ensure elasticsearch init script is installed
   template:

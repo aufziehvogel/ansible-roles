@@ -27,7 +27,7 @@
     src: /opt/kibana/kibana-5.5.2-linux-x86_64.tar.gz
     dest: /opt/kibana/
     remote_src: True
-  when: kibanadownloaded|changed
+  when: kibanadownloaded is changed
 
 - name: Ensure kibana init script is installed
   template:
