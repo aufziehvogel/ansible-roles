@@ -1,0 +1,43 @@
+---
+- name: Ensure group exists
+  group:
+    name: "{{ sftp_group }}"
+  become: true
+
+- name: Ensure users exist
+  user:
+    name: "{{ item }}"
+    shell: /sbin/nologin
+    home: /upload
+    groups:
+      - "{{ sftp_group }}"
+  with_items: "{{ sftp_users }}"
+  become: true
+
+- name: Ensure users SFTP directories exist
+  file:
+    path: "{{ sftp_data_dir }}/{{ item }}/upload"
+    state: directory
+    recurse: yes
+    owner: "{{ item }}"
+    group: "{{ sftp_group }}"
+    mode: 0700
+  with_items: "{{ sftp_users }}"
+  become: true
+
+- name: Ensure chroot directories are root owned (required by sshd)
+  file:
+    path: "{{ sftp_data_dir }}/{{ item }}"
+    state: directory
+    owner: "root"
+    group: "{{ sftp_group }}"
+    mode: 0755
+  with_items: "{{ sftp_users }}"
+  become: true
+
+# TODO: Create the sshd config section, but do not create twice if already
+# exists
+# Match Group sftpusers
+# ChrootDirectory {{ sftp_data_dir }}/%u
+# ForceCommand internal-sftp
+# AuthorizedKeysFile /data/sftp/%u/.ssh/authorized_keys

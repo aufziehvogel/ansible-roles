@@ -1,0 +1,4 @@
+---
+sftp_group: sftp_users
+sftp_users: []
+sftp_data_dir: /data/sftp
