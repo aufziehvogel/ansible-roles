@@ -6,6 +6,15 @@
   become: true
   notify: Start Nginx
 
+- name: Ensure static directory is available for nginx
+  file:
+    path: "/var/www/{{ pidar_name }}/public_html"
+    state: directory
+    recurse: true
+    owner: www-data
+    group: www-data
+  become: true
+
 - name: Ensure site configuration is available for nginx
   template:
     src: templates/pidar_nginx.conf
@@ -21,3 +30,9 @@
     state: link
   become: true
   notify: Restart Nginx
+
+- name: Ensure Google Webmaster Tools verification is available
+  template:
+    src: templates/googleverification.html
+    dest: "/var/www/{{ pidar_name }}/public_html/{{ pidar_google_verification_filename }}"
+  when: pidar_google_verification_filename is defined

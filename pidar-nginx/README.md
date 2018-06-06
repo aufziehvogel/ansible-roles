@@ -57,6 +57,8 @@ Role Variables
 - `pidar_matomo_siteid`: The siteid of this site that was assigned by matomo
 - `pidar_matomo_deletion_days`: The number of days after which you will delete
   personal data from matomo
+- `pidar_google_verification_filename`: The filename of the verification file
+  that you have to download and host for Google Webmaster Tools (optional)
 
 ### Legal and Contact related
 
