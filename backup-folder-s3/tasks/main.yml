@@ -1,0 +1,28 @@
+---
+- name: Ensure aws-cli is installed
+  package:
+    name: awscli
+    state: present
+  become: true
+
+- name: Make sure GPG public key is uploaded
+  template:
+    src: templates/gpg.asc.j2
+    dest: /tmp/gpg.asc
+  register: gpgkey
+  when: backup_folder_s3_gpgkey is defined
+
+- name: Make sure GPG public key is imported
+  command: "gpg --import /tmp/gpg.asc"
+  # Must be imported to the keyring of the user that should encrypt
+  become: true
+  become_user: "{{ backup_folder_s3_user }}"
+  when: gpgkey is changed
+
+- name: Ensure backup script is installed
+  template:
+    src: templates/aws-backup-folder.j2
+    dest: "/etc/cron.daily/{{ backup_folder_s3_backupname }}-backup-folder-s3"
+    remote_src: no
+    mode: 0755
+  become: true

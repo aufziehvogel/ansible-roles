@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+now=$(date +"%Y%m%d-%H%M%S")
+filename={{ backup_folder_s3_backupname }}_${now}.tar.gz
+filepath=/tmp/$filename
+
+backuproot=$(dirname {{ backup_folder_s3_folder }})
+backupdirname=$(basename {{ backup_folder_s3_folder }})
+
+tar zcf $filepath -C $backuproot $backupdirname
+
+{% if backup_folder_s3_gpgkey %}
+su -c "gpg --encrypt --recipient {{ backup_folder_s3_gpgkey_mail }} --trust-model always $filepath" {{ backup_folder_s3_user }}
+
+# filename now has a gpg suffix
+rm $filepath
+filename=${filename}.gpg
+filepath=${filepath}.gpg
+{% endif %}
+
+su -c "aws s3 cp $filepath s3://{{ backup_folder_s3_bucket }}/{{ backup_folder_s3_backupname }}/${filename}" {{ backup_folder_s3_user }}
+ret_code=$?
+
+rm $filepath
+
+if [ "$ret_code" -eq "0" ]; then
+	curl -fsS --retry 3 {{ backup_folder_s3_healthchecks_url }} > /dev/null
+fi
