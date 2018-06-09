@@ -5,6 +5,12 @@
     state: latest
   become: true
 
+- name: Ensure letsencrypt directory is available
+  file:
+    path: /var/www/letsencrypt
+    state: directory
+  become: true
+
 - include: "request_ssl.yml"
   with_dict: "{{ ssl_domains }}"
 
