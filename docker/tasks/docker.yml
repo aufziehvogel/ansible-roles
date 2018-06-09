@@ -13,19 +13,19 @@
 
 - name: Ensure we have a directory for docker related files
   file:
-    path: "{{ gitlab_docker_data_dir }}"
+    path: "{{ docker_data_dir }}"
     state: directory
   become: true
 
 - name: Ensure docker official GPG key is available
   copy:
     src: "files/docker_repo_gpg"
-    dest: "{{ gitlab_docker_data_dir }}/docker-stretch-stable.gpg"
+    dest: "{{ docker_data_dir }}/docker-stretch-stable.gpg"
   become: true
   register: gpgkey
 
 - name: Ensure GPG key is installed
-  command: apt-key add /opt/docker/docker-stretch-stable.gpg
+  command: "apt-key add {{ docker_data_dir }}/docker-stretch-stable.gpg"
   become: true
   when: gpgkey is changed
   register: dockerrepo

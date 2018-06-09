@@ -6,11 +6,13 @@ This is a role to install the docker container of GitLab.
 Requirements
 ------------
 
-Requires the role `docker` to be executed before this role.
+The system must be Debian.
 
 Role Variables
 --------------
 
+- `gitlab_docker_debian_version`: The version of Debian you are running
+  (e.g. stretch)
 - `gitlab_docker_data_dir`: The directory in which you want GitLab to store
   its data on the host machine
 - `gitlab_docker_http_public`: Whether or not you want to expose this instance
@@ -33,7 +35,6 @@ HTTP termination.
       vars_files:
          - "vars/ssl_gitlab.yml"
       roles:
-         - docker
          - gitlab-docker
          - ssl
          - nginx

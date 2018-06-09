@@ -1,0 +1,3 @@
+---
+docker_debian_version: stretch
+docker_data_dir: /opt/docker

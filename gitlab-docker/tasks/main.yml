@@ -1,3 +1,2 @@
 ---
-- import_tasks: docker.yml tags=docker
 - import_tasks: gitlab.yml tags=gitlab
