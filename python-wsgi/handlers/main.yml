@@ -1,0 +1,14 @@
+---
+- name: Start supervisor
+  service:
+    name: supervisor
+    state: started
+    enabled: yes
+  become: true
+
+- name: Reload supervisor
+  service:
+    name: supervisor
+    state: reloaded
+    enabled: yes
+  become: true

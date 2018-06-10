@@ -1,0 +1,42 @@
+- name: Ensure Python3 is installed
+  package:
+    name: python3
+    state: latest
+  become: true
+
+- name: Ensure virtualenv is installed
+  package:
+    name: virtualenv
+    state: latest
+  become: true
+
+- name: Ensure project is latest state
+  git:
+    repo: "{{ python_wsgi_repo_url }}"
+    dest: "{{ python_wsgi_dest_path }}"
+  notify: Reload supervisor
+
+- name: Ensure virtualenv is available and prepared
+  pip:
+    virtualenv: "{{ python_wsgi_dest_path }}/env"
+    virtualenv_python: python3
+    requirements: "{{ python_wsgi_dest_path }}/requirements.txt"
+
+- name: Setup gunicorn to serve website
+  pip:
+    virtualenv: "{{ python_wsgi_dest_path }}/env"
+    name: gunicorn
+
+- name: Ensure supervisord is installed for gunicorn
+  package:
+    name: supervisor
+    state: latest
+  become: true
+  notify: Start supervisor
+
+- name: Ensure supervisor script is installed
+  template:
+    src: templates/supervisor.conf
+    dest: "/etc/supervisor/conf.d/{{ python_wsgi_name }}.conf"
+  become: true
+  notify: Reload supervisor
