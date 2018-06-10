@@ -16,6 +16,8 @@ Role Variables
 
 - `pidar_name`: A name for the instance which will be used for filenames
   on the filesystem
+- `pidar_repo_url`: URL of the repo from which PiDAR should be fetched
+  during installation
 - `pidar_user`: The user which should run pidar
 - `pidar_group`: The group which should run pidar
 - `pidar_nginx_port`: The non-SSL port to which nginx should listen

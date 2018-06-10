@@ -6,7 +6,7 @@
 
 - name: Ensure project is latest state
   git:
-    repo: https://github.com/aufziehvogel/pidar.git
+    repo: "{{ pidar_repo_url }}"
     dest: "{{ pidar_install_dir }}"
     force: yes
   notify: Restart supervisor
