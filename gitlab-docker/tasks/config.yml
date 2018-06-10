@@ -1,0 +1,20 @@
+---
+- name: Ensure LFS is enabled
+  lineinfile:
+    path: "{{ gitlab_docker_data_dir }}/config/gitlab.rb"
+    regexp: "^gitlab_rails\\['lfs_enabled'\\]"
+    insertafter: "^# gitlab_rails\\['lfs_enabled'\\]"
+    line: "gitlab_rails['lfs_enabled'] = true"
+  become: true
+  when: gitlab_docker_lfs_enabled
+
+- name: Ensure LFS directory is configured
+  lineinfile:
+    path: "{{ gitlab_docker_data_dir }}/config/gitlab.rb"
+    regexp: "^gitlab_rails\\['lfs_storage_path'\\]"
+    insertafter: "^# gitlab_rails\\['lfs_storage_path'\\]"
+    # Inside the container we always map to /data/lfs, only the outside
+    # container path is configurable
+    line: "gitlab_rails['lfs_storage_path'] = \"/data/lfs\""
+  become: true
+  when: gitlab_docker_lfs_enabled

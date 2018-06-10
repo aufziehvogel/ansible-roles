@@ -23,6 +23,12 @@ Role Variables
 - `gitlab_docker_hostname`: The hostname under which the GitLab instance will
   be reached, i.e. the external domain you use to reach GitLab
 
+### Configuration of the Gitlab setup
+
+- `gitlab_docker_lfs_enabled`: Whether to enable LFS storage
+- `gitlab_docker_lfs_storage_path`: The path to which LFS items should be
+  stored (path on the host, not in the gitlab container)
+
 Example Playbook
 ----------------
 

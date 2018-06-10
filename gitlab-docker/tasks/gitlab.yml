@@ -1,4 +1,18 @@
 ---
+- name: Ensure Gitlab data dir is available
+  file:
+    path: "{{ gitlab_docker_data_dir }}"
+    state: directory
+  become: true
+
+# This task is executed even when LFS is not enabled, because we have to
+# mount this folder into the docker container
+- name: Ensure LFS directory is available
+  file:
+    path: "{{ gitlab_docker_lfs_storage_path }}"
+    state: directory
+  become: true
+
 - name: Ensure pip is available
   package:
     name: python-pip
@@ -29,6 +43,7 @@
       - "{{ gitlab_docker_data_dir }}/config:/etc/gitlab"
       - "{{ gitlab_docker_data_dir }}/logs:/var/log/gitlab"
       - "{{ gitlab_docker_data_dir }}/data:/var/opt/gitlab"
+      - "{{ gitlab_docker_lfs_storage_path }}:/data/lfs"
     hostname: "{{ gitlab_docker_hostname }}"
   become: true
   when: gitlab_docker_http_public
@@ -45,6 +60,7 @@
       - "{{ gitlab_docker_data_dir }}/config:/etc/gitlab"
       - "{{ gitlab_docker_data_dir }}/logs:/var/log/gitlab"
       - "{{ gitlab_docker_data_dir }}/data:/var/opt/gitlab"
+      - "{{ gitlab_docker_lfs_storage_path }}:/data/lfs"
     hostname: "{{ gitlab_docker_hostname }}"
   become: true
   when: not gitlab_docker_http_public

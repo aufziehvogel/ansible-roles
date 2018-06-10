@@ -1,2 +1,3 @@
 ---
 - import_tasks: gitlab.yml tags=gitlab
+- import_tasks: config.yml tags=gitlab
