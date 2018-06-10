@@ -1,3 +1,4 @@
 ---
 nginx_passthrough_listen_port: 80
 nginx_passthrough_listen_port_ssl: 443
+nginx_passthrough_server_name_alternatives: []
