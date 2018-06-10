@@ -1,2 +1,3 @@
 ---
 ssl_debian_version: jessie
+ssl_keep_ngix_conf: false

@@ -29,3 +29,4 @@
     state: absent
     path: "/etc/nginx/sites-enabled/{{ item.key }}.conf"
   become: true
+  when: not ssl_keep_ngix_conf

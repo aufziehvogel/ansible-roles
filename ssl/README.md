@@ -39,6 +39,12 @@ for which the certificate should be issued.
 For each entry in the dictionary, certbot will issue one certificate that
 is valid for the given domains.
 
+Other configuration variables:
+
+- `ssl_keep_ngix_conf`: Set this to `true` if you want to keep the nginx
+  configuration file from this role (i.e. you do not ship your own nginx
+  configuration file)
+
 Dependencies
 ------------
 
