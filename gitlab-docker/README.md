@@ -22,6 +22,8 @@ Role Variables
   connection (always used)
 - `gitlab_docker_hostname`: The hostname under which the GitLab instance will
   be reached, i.e. the external domain you use to reach GitLab
+- `gitlab_docker_external_ssl`: Set to `true` if you use SSL on an external
+  reverse proxy
 
 ### Configuration of the Gitlab setup
 

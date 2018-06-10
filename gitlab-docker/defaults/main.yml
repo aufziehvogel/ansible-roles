@@ -3,5 +3,6 @@ gitlab_docker_data_dir: /opt/gitlab
 gitlab_docker_http_public: true
 gitlab_docker_http_port: 80
 gitlab_docker_ssh_port: 22
+gitlab_docker_external_ssl: false
 gitlab_docker_lfs_enabled: false
 gitlab_docker_lfs_storage_path: /opt/gitlab/lfs

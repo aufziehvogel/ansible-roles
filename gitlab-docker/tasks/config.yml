@@ -18,3 +18,30 @@
     line: "gitlab_rails['lfs_storage_path'] = \"/data/lfs\""
   become: true
   when: gitlab_docker_lfs_enabled
+
+- name: Ensure external_url is configured
+  lineinfile:
+    path: "{{ gitlab_docker_data_dir }}/config/gitlab.rb"
+    regexp: "^external_url"
+    insertafter: "^# external_url"
+    line: "external_url 'https://{{ gitlab_docker_hostname }}'"
+  become: true
+  when: gitlab_docker_external_ssl
+
+- name: Ensure listen port is configured for external reverse proxy
+  lineinfile:
+    path: "{{ gitlab_docker_data_dir }}/config/gitlab.rb"
+    regexp: "^nginx\\['listen_port'\\]"
+    insertafter: "^# nginx\\['listen_port'\\]"
+    line: "nginx['listen_port'] = 80"
+  become: true
+  when: gitlab_docker_external_ssl
+
+- name: Ensure listen https is configured for external reverse proxy
+  lineinfile:
+    path: "{{ gitlab_docker_data_dir }}/config/gitlab.rb"
+    regexp: "^nginx\\['listen_https'\\]"
+    insertafter: "^# nginx\\['listen_https'\\]"
+    line: "nginx['listen_https'] = false"
+  become: true
+  when: gitlab_docker_external_ssl
