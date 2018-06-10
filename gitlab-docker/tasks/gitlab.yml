@@ -38,7 +38,7 @@
     recreate: no
     ports:
       - "{{ gitlab_docker_http_port }}:80"
-      - "{{ gitlab_docker_ssh_port }}:{{ gitlab_docker_ssh_port }}"
+      - "{{ gitlab_docker_ssh_port }}:22"
     volumes:
       - "{{ gitlab_docker_data_dir }}/config:/etc/gitlab"
       - "{{ gitlab_docker_data_dir }}/logs:/var/log/gitlab"
@@ -55,7 +55,7 @@
     state: started
     recreate: no
     ports:
-      - "{{ gitlab_docker_ssh_port }}:{{ gitlab_docker_ssh_port }}"
+      - "{{ gitlab_docker_ssh_port }}:22"
     volumes:
       - "{{ gitlab_docker_data_dir }}/config:/etc/gitlab"
       - "{{ gitlab_docker_data_dir }}/logs:/var/log/gitlab"
