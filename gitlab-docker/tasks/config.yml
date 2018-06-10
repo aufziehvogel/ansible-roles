@@ -45,3 +45,11 @@
     line: "nginx['listen_https'] = false"
   become: true
   when: gitlab_docker_external_ssl
+
+- name: Ensure SSH is available on the right port to display correct checkout URLs
+  lineinfile:
+    path: "{{ gitlab_docker_data_dir }}/config/gitlab.rb"
+    regexp: "^gitlab_rails\\['gitlab_shell_ssh_port'\\]"
+    insertafter: "^# gitlab_rails\\['gitlab_shell_ssh_port'\\]"
+    line: "gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_docker_ssh_port }}"
+  become: true
