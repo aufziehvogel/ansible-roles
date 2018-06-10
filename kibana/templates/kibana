@@ -18,8 +18,8 @@ LOG_DIR=$KIBANA_HOME/logs
 DATA_DIR=$KIBANA_HOME/data
 WORK_DIR=/tmp/$NAME
 CONF_DIR=/etc/$NAME
-ES_USER={{ kibana_nginx_user }}
-ES_GROUP={{ kibana_nginx_group }}
+ES_USER={{ kibana_user }}
+ES_GROUP={{ kibana_group }}
 DAEMON_OPTS="-p $PID_FILE"
 
 

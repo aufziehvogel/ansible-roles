@@ -13,8 +13,8 @@ EnvironmentFile=-${path.env}
 
 WorkingDirectory=/opt/kibana/kibana-5.5.2-linux-x86_64
 
-User={{ kibana_nginx_user }}
-Group={{ kibana_nginx_group }}
+User={{ kibana_user }}
+Group={{ kibana_group }}
 
 ExecStart=/opt/kibana/kibana-5.5.2-linux-x86_64/bin/kibana -p ${PID_DIR}/kibana.pid --quiet
 

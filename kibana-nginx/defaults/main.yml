@@ -1,6 +1,0 @@
----
-kibana_nginx_user: kibana
-kibana_nginx_group: kibana
-kibana_nginx_listen_port: 80
-kibana_nginx_server_name: logs.stefan-koch.name
-kibana_nginx_login_username: user

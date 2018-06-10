@@ -10,8 +10,8 @@
   file:
     path: /opt/kibana
     state: directory
-    owner: "{{ kibana_nginx_user }}"
-    group: "{{ kibana_nginx_group }}"
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
     mode: 0755
   become: true
 
