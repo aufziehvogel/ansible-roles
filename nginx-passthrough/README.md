@@ -26,6 +26,10 @@ Role Variables
   traffic
 - `nginx_passthrough_target_port`: The target port of your service to which
   nginx should relay the traffic
+- `nginx_passthrough_target_socket`: If you serve your WSGI project on a
+  socket, you can also use this setting instead of
+  `nginx_passthrough_target_host` and `nginx_passthrough_target_port`, the
+  value must include the `unix:` prefix, e.g. `unix:/run/gunicorn/project.sock`
 
 Optionally, you can define the following variables to protect the site with
 username and password:

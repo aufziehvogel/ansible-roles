@@ -18,6 +18,9 @@ Role Variables
 - `python_wsgi_app`: The name/path to the application that should be served,
   e.g. usually `mymodule.app:app`
 - `python_wsgi_port`: The port on which the app should be served
+- `python_wsgi_socket`: If you want to serve your website through a socket
+  file, you can also use this setting instead of `python_wsgi_port`, the value
+  must include the `unix:` prefix, e.g. `unix:/run/gunicorn/project.lock`
 - `python_wsgi_user`: The user under which this task should run
 - `python_wsgi_group`: The group under which this task should run
 
