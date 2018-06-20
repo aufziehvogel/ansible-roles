@@ -38,6 +38,12 @@ username and password:
 - `nginx_passthrough_login_passwordhash`: The htaccess password hash from the
   password for login
 
+Other options are:
+
+- `nginx_passthrough_cross_origin_host`: If you want to allow cross origin
+  requests (i.e. send the `Access-Control-Allow-Origin` header), specify
+  the allowed host (or `*`) with this option
+
 Example Playbook
 ----------------
 
