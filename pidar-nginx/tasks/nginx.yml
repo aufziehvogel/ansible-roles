@@ -1,11 +1,4 @@
 ---
-- name: Ensure nginx is installed
-  package:
-    name: nginx
-    state: latest
-  become: true
-  notify: Start Nginx
-
 - name: Ensure static directory is available for nginx
   file:
     path: "/var/www/{{ pidar_name }}/public_html"
@@ -14,22 +7,6 @@
     owner: www-data
     group: www-data
   become: true
-
-- name: Ensure site configuration is available for nginx
-  template:
-    src: templates/pidar_nginx.conf
-    dest: "/etc/nginx/sites-available/{{ pidar_name }}.conf"
-    mode: 0644
-  become: true
-  notify: Restart Nginx
-
-- name: Ensure site is enabled in nginx
-  file:
-    src: "/etc/nginx/sites-available/{{ pidar_name }}.conf"
-    dest: "/etc/nginx/sites-enabled/{{ pidar_name }}.conf"
-    state: link
-  become: true
-  notify: Restart Nginx
 
 - name: Ensure Google Webmaster Tools verification is available
   template:

@@ -7,7 +7,8 @@ with supervisor as daemon manager.
 Requirements
 ------------
 
-You also need to setup the roles nginx and SSL to use this role.
+You also need to setup the roles nginx, ssl and nginx-passthrough to
+use this role.
 
 Role Variables
 --------------
@@ -20,11 +21,8 @@ Role Variables
   during installation
 - `pidar_user`: The user which should run pidar
 - `pidar_group`: The group which should run pidar
-- `pidar_nginx_port`: The non-SSL port to which nginx should listen
-- `pidar_nginx_ssl_port`: The SSL port to which nginx should listen
-- `pidar_nginx_server_name`: The domain name you want to use
 - `pidar_install_dir`: The directory to which you want to download pidar
-- `pidar_gunicorn_port`: The port on which nginx and gunicorn should
+- `pidar_gunicorn_socket`: The socket on which nginx and gunicorn should
   communicate
 
 ### Database related
@@ -84,6 +82,7 @@ too. Moreover, you'll have to point to a vars file to use for the SSL role.
          - nginx
          - pidar-nginx
          - ssl
+         - nginx-passthrough
 
 License
 -------
