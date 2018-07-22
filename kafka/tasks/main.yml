@@ -29,6 +29,13 @@
     remote_src: True
   when: kafkadownloaded is changed
 
+- name: Ensure configuration is available
+  template:
+    src: templates/server.properties
+    dest: /opt/kafka/kafka_2.11-1.1.0/config/server.properties
+  become: true
+  notify: Restart supervisor kafka
+
 - name: Ensure supervisord is installed
   package:
     name: supervisor

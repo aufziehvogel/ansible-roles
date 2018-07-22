@@ -12,3 +12,7 @@
     - supervisorctl reread
     - supervisorctl update
   become: true
+
+- name: Restart supervisor kafka
+  command: supervisorctl restart kafka
+  become: true
