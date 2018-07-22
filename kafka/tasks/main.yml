@@ -1,0 +1,51 @@
+---
+- name: Ensure Java is installed
+  package:
+    name: openjdk-8-jre
+    state: present
+  become: true
+  register: javainstalled
+
+- name: Ensure target folder for kafka exists
+  file:
+    path: /opt/kafka
+    state: directory
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure Kafka is downloaded
+  get_url:
+    url: ftp://ftp.halifax.rwth-aachen.de/apache/kafka/1.1.0/kafka_2.11-1.1.0.tgz
+    dest: /opt/kafka/kafka_2.11-1.1.0.tgz
+    force: no
+  register: kafkadownloaded
+
+- name: Unzip the downloaded Kafka
+  unarchive:
+    src: /opt/kafka/kafka_2.11-1.1.0.tgz
+    dest: /opt/kafka/
+    remote_src: True
+  when: kafkadownloaded is changed
+
+- name: Ensure supervisord is installed
+  package:
+    name: supervisor
+    state: latest
+  become: true
+  notify: Start supervisor
+
+- name: Ensure supervisor script is installed for kafka
+  template:
+    src: templates/supervisor_kafka.conf
+    dest: "/etc/supervisor/conf.d/kafka.conf"
+  become: true
+  notify: Reload supervisor
+
+- name: Ensure supervisor script is installed for zookeeper
+  template:
+    src: templates/supervisor_zookeeper.conf
+    dest: "/etc/supervisor/conf.d/zookeeper.conf"
+  become: true
+  notify: Reload supervisor

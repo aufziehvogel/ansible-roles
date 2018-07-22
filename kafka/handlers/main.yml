@@ -1,0 +1,14 @@
+---
+- name: Start supervisor
+  service:
+    name: supervisor
+    state: started
+    enabled: yes
+  become: true
+
+- name: Reload supervisor
+  command: "{{ item }}"
+  with_items:
+    - supervisorctl reread
+    - supervisorctl update
+  become: true
