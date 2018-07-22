@@ -10,4 +10,4 @@
     src: templates/jupyter_supervisor.conf
     dest: /etc/supervisor/conf.d/jupyter_notebook.conf
   become: true
-  notify: Restart supervisor
+  notify: Reload supervisor

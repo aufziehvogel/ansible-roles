@@ -20,9 +20,8 @@
     enabled: yes
   become: true
 
-- name: Restart supervisor
-  service:
-    name: supervisor
-    state: restarted
-    enabled: yes
-  become: true
+- name: Reload supervisor
+  command: "{{ item }}"
+  with_items:
+    - supervisorctl reread
+    - supervisorctl update

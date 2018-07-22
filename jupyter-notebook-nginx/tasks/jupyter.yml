@@ -17,7 +17,7 @@
   template:
     src: templates/jupyter_notebook_config.py
     dest: "/home/{{ jupyter_user }}/.jupyter/jupyter_notebook_config.py"
-  notify: Restart supervisor
+  notify: Reload supervisor
 
 - name: Ensure Jupyter notebooks folder exists
   file:

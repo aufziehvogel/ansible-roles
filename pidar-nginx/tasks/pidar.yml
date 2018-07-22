@@ -9,13 +9,13 @@
     repo: "{{ pidar_repo_url }}"
     dest: "{{ pidar_install_dir }}"
     force: yes
-  notify: Restart supervisor
+  notify: Reload supervisor
 
 - name: Ensure production settings are set
   template:
     src: templates/dotenv
     dest: "{{ pidar_install_dir }}/.env"
-  notify: Restart supervisor
+  notify: Reload supervisor
 
 - name: Ensure virtualenv is available and prepared
   pip:

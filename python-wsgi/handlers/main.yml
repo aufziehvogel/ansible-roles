@@ -7,8 +7,8 @@
   become: true
 
 - name: Reload supervisor
-  service:
-    name: supervisor
-    state: reloaded
-    enabled: yes
+  command: "{{ item }}"
+  with_items:
+    - supervisorctl reread
+    - supervisorctl update
   become: true
