@@ -1,0 +1,4 @@
+---
+rawdog_git_url: http://offog.org/git/rawdog.git
+rawdog_dest_path: /opt/rawdog
+rawdog_user: rawdog

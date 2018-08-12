@@ -1,0 +1,48 @@
+- name: Ensure Python2 is installed
+  package:
+    name: python
+    state: latest
+  become: true
+
+- name: Ensure virtualenv is installed
+  package:
+    name: virtualenv
+    state: latest
+  become: true
+
+- name: Ensure project is latest state
+  git:
+    repo: "{{ rawdog_git_url }}"
+    dest: "{{ rawdog_dest_path }}"
+
+- name: Ensure virtualenv is available and prepared
+  pip:
+    name: "{{ rawdog_dest_path }}"
+    virtualenv: "{{ rawdog_dest_path }}/env"
+    virtualenv_python: python2
+
+- name: Ensure feedparser is available
+  pip:
+    name: feedparser
+    virtualenv: "{{ rawdog_dest_path }}/env"
+
+- name: Ensure .rawdog dir is available
+  file:
+    path: "/home/{{ rawdog_user }}/.rawdog"
+    state: directory
+
+- name: Ensure the config file is available
+  copy:
+    src: "{{ rawdog_dest_path }}/config"
+    remote_src: yes
+    dest: "/home/{{ rawdog_user }}/.rawdog/config"
+    force: no
+
+- name: Ensure cronjob to update feeds is available
+  cron:
+    name: rawdog_update_write
+    special_time: hourly
+    job: "source {{ rawdog_dest_path }}/env/bin/activate && rawdog -uw"
+  become: true
+  become_user: "{{ rawdog_user }}"
+
