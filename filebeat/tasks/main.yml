@@ -1,0 +1,24 @@
+---
+- name: Download and install the Public Signing Key
+  shell: wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+  become: true
+
+- name: Install the apt-transport-https package
+  package:
+    name: apt-transport-https
+    state: present
+  become: true
+
+- name: Add repository definition
+  copy:
+    src: files/elastic-5.x.list
+    dest: /etc/apt/sources.list.d/elastic-5.x.list
+  become: true
+
+- name: Ensure that filebeat is installed
+  package:
+    name: filebeat
+    state: present
+    update_cache: yes
+  become: true
+  notify: Start Filebeat
