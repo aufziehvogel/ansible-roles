@@ -25,3 +25,4 @@
   with_items:
     - supervisorctl reread
     - supervisorctl update
+  become: true
