@@ -16,7 +16,8 @@ Role Variables
 
 - `kafka_user`: The user which should run kafka
 - `kafka_group`: The group which should run kafka
-- 
+- `kafka_listen_address`: The IP address to which kafka should listen, use
+  `localhost` to restrict connections to localhost
 
 Example Playbook
 ----------------

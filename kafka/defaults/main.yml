@@ -1,3 +1,4 @@
 ---
 kafka_user: kafka
 kafka_group: kafka
+kafka_listen_address: localhost
