@@ -1,0 +1,49 @@
+---
+- name: Ensure thelounge data dir is available
+  file:
+    path: "{{ thelounge_docker_data_dir }}"
+    state: directory
+  become: true
+
+- name: Ensure pip is available
+  package:
+    name: python-pip
+    state: present
+  become: true
+
+- name: Ensure Python bindings for docker are available, required for ansible
+  pip:
+    name: docker
+  become: true
+
+- name: Ensure thelounge docker image is available
+  docker_image:
+    name: thelounge/thelounge
+    tag: 3.0.0-rc.2-alpine
+  become: true
+
+- name: Ensure thelounge container is running (public)
+  docker_container:
+    name: thelounge
+    image: thelounge/thelounge:3.0.0-rc.2-alpine
+    state: started
+    recreate: no
+    ports:
+      - "{{ thelounge_docker_http_port }}:9000"
+    volumes:
+      - "{{ thelounge_docker_data_dir }}:/var/opt/thelounge"
+    hostname: "{{ thelounge_docker_hostname }}"
+  become: true
+  when: thelounge_docker_http_public
+
+- name: Ensure thelounge container is running (non-public)
+  docker_container:
+    name: thelounge
+    image: thelounge/thelounge:3.0.0-rc.2-alpine
+    state: started
+    recreate: no
+    volumes:
+      - "{{ thelounge_docker_data_dir }}:/var/opt/thelounge"
+    hostname: "{{ thelounge_docker_hostname }}"
+  become: true
+  when: not thelounge_docker_http_public

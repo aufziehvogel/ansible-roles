@@ -1,0 +1,4 @@
+---
+thelounge_docker_data_dir: /opt/thelounge
+thelounge_docker_http_public: true
+thelounge_docker_http_port: 9000
