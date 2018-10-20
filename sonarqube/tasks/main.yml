@@ -1,0 +1,60 @@
+---
+- name: Ensure Java is installed
+  package:
+    name: openjdk-8-jre
+    state: present
+  become: true
+  register: javainstalled
+
+- name: Ensure target folder for sonarqube exists
+  file:
+    path: /opt/sonarqube
+    state: directory
+    owner: "{{ sonarqube_user }}"
+    group: "{{ sonarqube_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure Sonarqube is downloaded
+  get_url:
+    url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-6.7.5.zip
+    dest: /opt/sonarqube/sonarqube-6.7.5.zip
+    force: no
+  register: sonarqubedownloaded
+
+- name: Unzip the downloaded Sonarqube
+  unarchive:
+    src: /opt/sonarqube/sonarqube-6.7.5.zip
+    dest: /opt/sonarqube/
+    remote_src: True
+  when: sonarqubedownloaded is changed
+
+- name: Set SQL username
+  lineinfile:
+    path: /opt/sonarqube/sonarqube-6.7.5/conf/sonar.properties
+    regexp: '^#?sonar.jdbc.username='
+    line: 'sonar.jdbc.username={{ sonarqube_database_username }}'
+
+- name: Set SQL password
+  lineinfile:
+    path: /opt/sonarqube/sonarqube-6.7.5/conf/sonar.properties
+    regexp: '^#?sonar.jdbc.password='
+    line: 'sonar.jdbc.password={{ sonarqube_database_password }}'
+
+- name: Set SQL url
+  lineinfile:
+    path: /opt/sonarqube/sonarqube-6.7.5/conf/sonar.properties
+    regexp: '^#?sonar.jdbc.url='
+    line: 'sonar.jdbc.url={{ sonarqube_database_url }}'
+
+- name: Set listen host
+  lineinfile:
+    path: /opt/sonarqube/sonarqube-6.7.5/conf/sonar.properties
+    regexp: '^#?sonar.web.host='
+    line: 'sonar.web.host={{ sonarqube_host }}'
+
+- name: Set listen port
+  lineinfile:
+    path: /opt/sonarqube/sonarqube-6.7.5/conf/sonar.properties
+    regexp: '^#?sonar.web.port='
+    line: 'sonar.web.port={{ sonarqube_port }}'

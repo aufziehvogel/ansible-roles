@@ -1,0 +1,8 @@
+---
+sonarqube_user: sonarqube
+sonarqube_group: sonarqube
+sonarqube_database_username: ""
+sonarqube_database_password: ""
+sonarqube_database_url: ""
+sonarqube_host: "0.0.0.0"
+sonarqube_port: 9000
