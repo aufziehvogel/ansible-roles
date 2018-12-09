@@ -1,2 +1,2 @@
 ---
-- import_tasks: docker.yml tags=docker
+- import_tasks: docker.yml
