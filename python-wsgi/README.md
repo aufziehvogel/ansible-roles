@@ -23,6 +23,9 @@ Role Variables
   must include the `unix:` prefix, e.g. `unix:/run/gunicorn/project.lock`
 - `python_wsgi_user`: The user under which this task should run
 - `python_wsgi_group`: The group under which this task should run
+- `python_wsgi_env_variables`: Define all environment variables that should
+  be passed to your application in this string in the form
+  `ENVNAME=value,OTHERENVNAME=other-value`
 
 Example Playbook
 ----------------
