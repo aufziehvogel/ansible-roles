@@ -1,2 +1,2 @@
 ---
-- import_tasks: gunicorn.yml tags=gunicorn
+- import_tasks: gunicorn.yml
