@@ -1,4 +1,4 @@
 ---
-- import_tasks: nginx.yml tags=nginx
-- import_tasks: pidar.yml tags=pidar
-- import_tasks: gunicorn.yml tags=gunicorn
+- import_tasks: nginx.yml
+- import_tasks: pidar.yml
+- import_tasks: gunicorn.yml
