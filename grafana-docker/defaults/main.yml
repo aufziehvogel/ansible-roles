@@ -1,0 +1,4 @@
+---
+grafana_docker_data_dir: /opt/grafana/data
+grafana_docker_server_host: 127.0.0.1
+grafana_docker_server_port: 3000

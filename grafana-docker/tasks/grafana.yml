@@ -1,0 +1,42 @@
+---
+- name: Ensure Grafana data dir is available
+  file:
+    path: "{{ grafana_docker_data_dir }}"
+    state: directory
+    # grafana uses its own user in docker, so let everyone write here
+    mode: '0777'
+  become: true
+
+- name: Ensure pip is available
+  package:
+    name: python-pip
+    state: present
+  become: true
+
+- name: Ensure Python bindings for docker are available, required for ansible
+  pip:
+    name: docker
+  become: true
+
+- name: Ensure Grafana docker image is available
+  docker_image:
+    name: grafana/grafana
+    tag: latest
+  become: true
+
+- name: Ensure Grafana container is running
+  docker_container:
+    name: grafana
+    image: grafana/grafana
+    state: started
+    recreate: no
+    network_mode: host
+    volumes:
+      - "{{ grafana_docker_data_dir }}:/var/lib/grafana"
+    env:
+      GF_SERVER_HTTP_ADDR: "{{ grafana_docker_server_host }}"
+      GF_SERVER_HTTP_PORT: "{{ grafana_docker_server_port }}"
+      GF_SERVER_ROOT_URL: "https://{{ grafana_docker_hostname }}"
+      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_docker_admin_password }}"
+    hostname: "{{ grafana_docker_hostname }}"
+  become: true
