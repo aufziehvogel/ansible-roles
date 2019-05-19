@@ -2,7 +2,7 @@
 Description=Graphite-API service
 
 [Service]
-ExecStart={{ graphite_api_directory }}/bin/gunicorn -w2 graphite_api.app:app
+ExecStart={{ graphite_api_directory }}/bin/gunicorn -w2 -b 127.0.0.1:{{ graphite_api_port }} graphite_api.app:app
 Restart=on-failure
 User={{ graphite_user }}
 Group={{ graphite_group }}

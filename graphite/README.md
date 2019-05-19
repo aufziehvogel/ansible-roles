@@ -18,6 +18,9 @@ Role Variables
   `graphite-api` is supported.
 - `graphite_user`: The user which should run graphite
 - `graphite_group`: The group which should run graphite
+- `graphite_api_directory`: The directory to which graphite-api should
+  be installed
+- `graphite_api_port`: The port to which graphite-api should bind
 
 Example Playbook
 ----------------
