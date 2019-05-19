@@ -1,0 +1,5 @@
+---
+graphite_directory: /opt/graphite
+graphite_endpoint: graphite-api
+graphite_user: kafka
+graphite_group: kafka

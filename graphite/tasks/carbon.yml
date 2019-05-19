@@ -1,0 +1,66 @@
+---
+- name: Ensure python is installed
+  package:
+    name: python
+    state: present
+  become: true
+
+- name: Ensure target folder for graphite exists
+  file:
+    path: "{{ graphite_directory }}"
+    state: directory
+    owner: "{{ graphite_user }}"
+    group: "{{ graphite_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure log folder for carbon exists
+  file:
+    path: "/var/log/carbon"
+    state: directory
+    owner: "{{ graphite_user }}"
+    group: "{{ graphite_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure /var/run folder for carbon exists
+  file:
+    path: "/var/run/carbon"
+    state: directory
+    owner: "{{ graphite_user }}"
+    group: "{{ graphite_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure carbon is installed
+  pip:
+    name: carbon
+    virtualenv: "{{ graphite_directory }}"
+    # graphite requires python2
+    virtualenv_python: python2
+
+- name: Ensure whisper is installed
+  pip:
+    name: whisper
+    virtualenv: "{{ graphite_directory }}"
+    virtualenv_python: python2
+
+- name: Ensure configuration storage-schemas.conf is available
+  template:
+    src: templates/storage-schemas.conf
+    dest: "{{ graphite_directory }}/conf/storage-schemas.conf"
+  become: true
+  become_user: "{{ graphite_user }}"
+
+- name: Ensure configuration carbon.conf is available
+  template:
+    src: templates/carbon.conf
+    dest: "{{ graphite_directory }}/conf/carbon.conf"
+  become: true
+  become_user: "{{ graphite_user }}"
+
+- name: Ensure systemd service file is available
+  template:
+    src: templates/carbon-cache.service
+    dest: /etc/systemd/system/carbon-cache.service
+  become: true

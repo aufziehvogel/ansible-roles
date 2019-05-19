@@ -1,0 +1,16 @@
+[Unit]
+Description=Graphite Carbon Cache
+After=network.target
+Documentation=https://graphite.readthedocs.io
+
+[Service]
+Type=forking
+User={{ graphite_user }}
+Group={{ graphite_group }}
+StandardOutput=syslog
+StandardError=syslog
+ExecStart={{ graphite_directory }}/bin/carbon-cache.py --config={{ graphite_directory }}/conf/carbon.conf --pidfile=/var/run/carbon/carbon-cache.pid --logdir=/var/log/carbon/ start
+PIDFile=/var/run/carbon/carbon-cache.pid
+
+[Install]
+WantedBy=multi-user.target
