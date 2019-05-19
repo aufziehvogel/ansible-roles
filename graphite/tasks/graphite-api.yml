@@ -11,15 +11,6 @@
     - libffi-dev
     - build-essential
 
-- name: Ensure target folder for graphite exists
-  file:
-    path: "{{ graphite_api_directory }}"
-    state: directory
-    owner: "{{ graphite_user }}"
-    group: "{{ graphite_group }}"
-    mode: 0755
-  become: true
-
 - name: Ensure target folder for graphite-api exists
   file:
     path: "{{ graphite_api_directory }}"
