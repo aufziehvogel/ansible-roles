@@ -1,0 +1,59 @@
+---
+- name: Ensure dependencies are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  become: true
+  with_items:
+    - python3
+    - python3-dev
+    - libcairo2-dev
+    - libffi-dev
+    - build-essential
+
+- name: Ensure target folder for graphite exists
+  file:
+    path: "{{ graphite_api_directory }}"
+    state: directory
+    owner: "{{ graphite_user }}"
+    group: "{{ graphite_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure target folder for graphite-api exists
+  file:
+    path: "{{ graphite_api_directory }}"
+    state: directory
+    owner: "{{ graphite_user }}"
+    group: "{{ graphite_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure graphite-api is installed
+  pip:
+    name: graphite-api
+    virtualenv: "{{ graphite_api_directory }}"
+    virtualenv_python: python3
+  become: true
+  become_user: "{{ graphite_user }}"
+
+- name: Ensure gunicorn is installed
+  pip:
+    name: gunicorn
+    virtualenv: "{{ graphite_api_directory }}"
+    virtualenv_python: python3
+  become: true
+  become_user: "{{ graphite_user }}"
+
+- name: Ensure configuration file is available
+  template:
+    src: templates/graphite-api-config.yml
+    dest: "{{ graphite_api_directory }}/config.yaml"
+  become: true
+  become_user: "{{ graphite_user }}"
+
+- name: Ensure systemd service file is available
+  template:
+    src: templates/graphite-api.service
+    dest: /etc/systemd/system/graphite-api.service
+  become: true

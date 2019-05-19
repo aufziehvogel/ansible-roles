@@ -1,0 +1,15 @@
+[Unit]
+Description=Graphite-API service
+
+[Service]
+ExecStart={{ graphite_api_directory }}/bin/gunicorn -w2 graphite_api.app:app
+Restart=on-failure
+User={{ graphite_user }}
+Group={{ graphite_group }}
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+Environment=GRAPHITE_API_CONFIG={{ graphite_api_directory }}/config.yaml
+
+[Install]
+WantedBy=multi-user.target

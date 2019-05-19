@@ -1,5 +1,6 @@
 ---
 graphite_directory: /opt/graphite
+graphite_api_directory: /opt/graphite-api
 graphite_endpoint: graphite-api
 graphite_user: kafka
 graphite_group: kafka

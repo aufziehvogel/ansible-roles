@@ -45,6 +45,8 @@
     # graphite requires python2
     virtualenv_python: python2
     extra_args: "--no-binary=:all:"
+  become: true
+  become_user: "{{ graphite_user }}"
 
 - name: Ensure whisper is installed
   pip:
@@ -52,6 +54,8 @@
     virtualenv: "{{ graphite_directory }}"
     virtualenv_python: python2
     extra_args: "--no-binary=:all:"
+  become: true
+  become_user: "{{ graphite_user }}"
 
 - name: Ensure configuration storage-schemas.conf is available
   template:

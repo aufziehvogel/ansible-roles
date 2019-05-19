@@ -1,0 +1,10 @@
+search_index: {{ graphite_api_directory }}/index
+finders:
+  - graphite_api.finders.whisper.WhisperFinder
+functions:
+  - graphite_api.functions.SeriesFunctions
+  - graphite_api.functions.PieFunctions
+whisper:
+  directories:
+    - {{ graphite_directory }}/storage/whisper
+time_zone: Europe/Berlin
