@@ -1,5 +1,5 @@
 ---
-- name: Ensure python is installed
+- name: Ensure dependencies are installed
   package:
     name: "{{ item }}"
     state: present
@@ -44,12 +44,14 @@
     virtualenv: "{{ graphite_directory }}"
     # graphite requires python2
     virtualenv_python: python2
+    extra_args: "--no-binary=:all:"
 
 - name: Ensure whisper is installed
   pip:
     name: whisper
     virtualenv: "{{ graphite_directory }}"
     virtualenv_python: python2
+    extra_args: "--no-binary=:all:"
 
 - name: Ensure configuration storage-schemas.conf is available
   template:
