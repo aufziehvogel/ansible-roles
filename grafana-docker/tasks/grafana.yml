@@ -38,5 +38,10 @@
       GF_SERVER_HTTP_PORT: "{{ grafana_docker_server_port }}"
       GF_SERVER_ROOT_URL: "https://{{ grafana_docker_hostname }}"
       GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_docker_admin_password }}"
+      GF_SMTP_ENABLED: "{{ grafana_docker_smtp_enabled }}"
+      GF_SMTP_HOST: "{{ grafana_docker_smtp_host }}"
+      GF_SMTP_USER: "{{ grafana_docker_smtp_user }}"
+      GF_SMTP_PASSWORD: "{{ grafana_docker_smtp_password }}"
+      GF_SMTP_FROM_ADDRESS: "{{ grafana_docker_smtp_from }}"
     hostname: "{{ grafana_docker_hostname }}"
   become: true

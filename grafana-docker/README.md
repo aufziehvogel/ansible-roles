@@ -24,6 +24,14 @@ Role Variables
   be reached, i.e. the external domain you use to reach Grafana
 - `grafana_docker_admin_password`: The password for the admin account of grafana
 
+E-Mail Notification:
+
+- `grafana_docker_smtp_enabled`: `true` or `false`
+- `grafana_docker_smtp_host`: The host to connect to
+- `grafana_docker_smtp_user`: The username to use for login
+- `grafana_docker_smtp_password`: The password to use for login
+- `grafana_docker_smtp_from`: Mail address to use in the `From` field
+
 Example Playbook
 ----------------
 
