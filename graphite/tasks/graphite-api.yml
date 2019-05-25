@@ -22,7 +22,7 @@
 
 - name: Ensure graphite-api is installed
   pip:
-    name: graphite-api
+    name: git+https://github.com/brutasse/graphite-api.git
     virtualenv: "{{ graphite_api_directory }}"
     virtualenv_python: python3
   become: true
