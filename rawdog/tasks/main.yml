@@ -42,7 +42,7 @@
   cron:
     name: rawdog_update_write
     special_time: hourly
-    job: "source {{ rawdog_dest_path }}/env/bin/activate && rawdog -uw"
+    job: "bash -c 'source {{ rawdog_dest_path }}/env/bin/activate && rawdog -uw'"
   become: true
   become_user: "{{ rawdog_user }}"
 
