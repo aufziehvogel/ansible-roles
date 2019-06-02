@@ -36,6 +36,12 @@ Example Configuration
         private_ip: 10.0.0.2
         port: 51821
 
+This configuration would work together with a `hosts` file with the following
+hosts:
+
+    [wireguard]
+    server1
+    server2
 
 Example Playbook
 ----------------
