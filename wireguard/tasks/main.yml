@@ -1,0 +1,51 @@
+---
+- name: Create private key
+  shell: "wg genkey > /root/wg-private.key"
+  args:
+    creates: /root/wg-private.key
+  become: true
+
+- name: Create public key
+  shell: "wg pubkey < /root/wg-private.key > /root/wg-public.key"
+  args:
+    creates: /root/wg-public.key
+  become: true
+
+- name: Make sure only root can read privkey
+  file:
+    path: /root/wg-private.key
+    owner: root
+    group: root
+    mode: '0600'
+  become: true
+
+- name: Get the private key contents
+  shell: "cat /root/wg-private.key"
+  register: privkey
+  become: true
+
+- name: Get the public key contents
+  shell: "cat /root/wg-public.key"
+  register: pubkey
+  become: true
+
+- name: Create configuration directory
+  file:
+    dest: "/etc/wireguard"
+    state: directory
+    mode: 0700
+  become: true
+
+- name: Ensure configuration is available for wireguard
+  template:
+    src: templates/wireguard.conf
+    dest: /etc/wireguard/wg-fullmesh.conf
+    mode: 0644
+  become: true
+
+- name: Start and enable wireguard
+  service:
+    name: "wg-quick@wg-fullmesh"
+    state: started
+    enabled: yes
+  become: true
