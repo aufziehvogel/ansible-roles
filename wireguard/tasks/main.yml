@@ -49,3 +49,19 @@
     state: started
     enabled: yes
   become: true
+
+- name: Add the host entries to /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ wireguard_hosts[item].private_ip }} {{ wireguard_hosts[item].private_hostname }} {{ wireguard_hosts[item].private_hostname }}.{{ wireguard_domain }}"
+    state: present
+  when: inventory_hostname != item
+  with_items: "{{ wireguard_hosts }}"
+  become: true
+
+- name: Add the localhost host entry to /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: "127.0.0.1 {{ wireguard_hosts[inventory_hostname].private_hostname }} {{ wireguard_hosts[inventory_hostname].private_hostname }}.{{ wireguard_domain }}"
+    state: present
+  become: true
