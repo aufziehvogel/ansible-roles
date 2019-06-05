@@ -23,6 +23,8 @@ Role Variables
 - `wireguard_hosts`: A dictionary of hosts, cf. the example below. The list
   of hosts must be exactly the same as you use in the `hosts` file for this
   role.
+- `road_warriors`: Optionally, a list of road warriors. See example below for
+  exact format.
 
 Example Configuration
 ---------------------
@@ -40,6 +42,11 @@ Example Configuration
         private_ip: 10.0.0.2
         port: 51821
         private_hostname: server2
+    road_warriors:
+      - pubkey: (your pc's public key)
+        private_ip: 10.0.0.3
+      - pubkey: (your pc's public key)
+        private_ip: 10.0.0.4
 
 The definition of `private_hostname` might seem unnecessary, because the
 hostname is already given as the dictionary key, but it isn't. Some people
