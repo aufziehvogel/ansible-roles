@@ -5,14 +5,20 @@ filename=${now}.sql
 filepath="{{ backup_postgres_s3_tmpdir }}/$filename"
 
 su -c "pg_dumpall > $filepath" {{ backup_postgres_s3_db_user }} 
-gzip $filepath
+zstd $filepath
 
-# filename now has a gz suffix
-filename=${filename}.gz
-filepath=${filepath}.gz
+# delete the file without .zst suffix
+rm $filepath
+
+# filename now has a zst suffix
+filename=${filename}.zst
+filepath=${filepath}.zst
 
 {% if backup_postgres_s3_gpgkey %}
 su -c "gpg --encrypt --recipient {{ backup_postgres_s3_gpgkey_mail }} --trust-model always $filepath" {{ backup_postgres_s3_s3_user }}
+
+# delete the file without gpg suffix
+rm $filepath
 
 # filename now has a gpg suffix
 filename=${filename}.gpg
