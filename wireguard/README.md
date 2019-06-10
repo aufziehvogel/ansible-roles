@@ -10,7 +10,13 @@ Requirements
 Wireguard must already be installed / enabled in the kernel (once this is
 available). This role does not install wireguard.
 
-You also must open the required ports on each host. This role does not
+For the static servers (`wireguard_hosts`) this role will setup entries in the
+`/etc/hosts` file so that all servers will use the internal routing to all
+other servers if connecting via the defined hostnames. For road warriors
+(`road_warriors`) you have to setup your `/etc/hosts` file as well as your
+wireguard configuration manually.
+
+You must open the required ports on each host. This role does not
 setup `iptables` for you.
 
 Role Variables
