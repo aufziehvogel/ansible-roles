@@ -1,5 +1,6 @@
 ---
-nginx_passthrough_allow_site: "all"
+nginx_passthrough_allow_sites:
+  - "all"
 nginx_passthrough_allow_acme: "all"
 nginx_passthrough_listen_port: 80
 nginx_passthrough_listen_port_ssl: 443

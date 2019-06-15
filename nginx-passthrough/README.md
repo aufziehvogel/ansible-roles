@@ -13,8 +13,8 @@ You also need to setup the roles nginx and SSL to use this role.
 Role Variables
 --------------
 
-- `nginx_passthrough_allow_site:`: Which IP range you want to allow to access
-  the site (default: `all`)
+- `nginx_passthrough_allow_sites:`: List of IP ranges you want to allow to
+  access the site (default one element: `all`)
 - `nginx_passthrough_allow_acme:`: Which IP range you want to allow to access
   the ACME challenge (default: `all`)
 - `nginx_passthrough_listen_port`: The port to which nginx should listen
