@@ -1,3 +1,4 @@
 ---
 gitlab_runner_docker_debian_version: stretch
 gitlab_runner_docker_data_dir: /opt/gitlab-runner
+gitlab_runner_docker_extra_hosts: ""

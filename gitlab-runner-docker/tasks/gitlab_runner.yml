@@ -29,6 +29,6 @@
   register: gitlab_runner_container
 
 - name: Ensure GitLab Runner is registered on GitLab
-  command: 'docker run --rm -v {{ gitlab_runner_docker_data_dir }}/config:/etc/gitlab-runner --name gitlab-runner-registration gitlab/gitlab-runner register --non-interactive --executor "docker" --docker-image alpine:3 --url "{{ gitlab_runner_docker_url }}" --registration-token "{{ gitlab_runner_docker_registration_token }}" --description "{{ gitlab_runner_docker_description }}" --tag-list "{{ gitlab_runner_docker_tags }}" --run-untagged --locked="false"'
+  command: 'docker run --rm -v {{ gitlab_runner_docker_data_dir }}/config:/etc/gitlab-runner --name gitlab-runner-registration gitlab/gitlab-runner register --non-interactive --executor "docker" --docker-image alpine:3 --url "{{ gitlab_runner_docker_url }}" --registration-token "{{ gitlab_runner_docker_registration_token }}" --description "{{ gitlab_runner_docker_description }}" --tag-list "{{ gitlab_runner_docker_tags }}" --run-untagged --locked="false" --docker-extra-hosts "{{ gitlab_runner_docker_extra_hosts }}"'
   become: true
   when: gitlab_runner_container is changed

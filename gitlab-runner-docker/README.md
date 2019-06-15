@@ -17,6 +17,8 @@ Role Variables
   runner to store its data on the host machine
 - `gitlab_runner_docker_url`: The URL on which your gitlab instance can be
   reached for registration
+- `gitlab_runner_docker_extra_hosts`: Required for internal networks to map
+  the hostname to an IP address, e.g. `gitlab:10.0.0.1`
 - `gitlab_runner_docker_registration_token`: The registration token of your
   GitLab instance to register new runners
 - `gitlab_runner_docker_description`: The description you want to use for your
