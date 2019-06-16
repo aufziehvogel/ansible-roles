@@ -1,0 +1,35 @@
+---
+- name: Ensure target folder for prometheus node exporter exists
+  file:
+    path: /opt/prometheus-node-exporter
+    state: directory
+    owner: "{{ prometheus_node_exporter_user }}"
+    group: "{{ prometheus_node_exporter_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure prometheus node exporter is downloaded
+  get_url:
+    url: "{{ prometheus_node_exporter_package_url }}"
+    dest: "/opt/prometheus-node-exporter/{{ prometheus_node_exporter_package_filename }}"
+    force: no
+  register: prometheusdownloaded
+  become: true
+  become_user: "{{ prometheus_node_exporter_user }}"
+
+- name: Unzip the downloaded prometheus node exporter
+  unarchive:
+    src: "/opt/prometheus-node-exporter/{{ prometheus_node_exporter_package_filename }}"
+    dest: /opt/prometheus-node-exporter/
+    remote_src: True
+  when: prometheusdownloaded is changed
+  become: true
+  become_user: "{{ prometheus_node_exporter_user }}"
+
+- name: Ensure prometheus node exporter systemd script is installed
+  template:
+    src: templates/prometheus-node-exporter.service
+    dest: /etc/systemd/system/prometheus-node-exporter.service
+    mode: 0755
+  become: true
+  notify: Start prometheus node exporter

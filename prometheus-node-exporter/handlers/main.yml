@@ -1,0 +1,7 @@
+---
+- name: Start prometheus node exporter
+  service:
+    name: prometheus-node-exporter
+    state: started
+    enabled: yes
+  become: true

@@ -1,0 +1,16 @@
+[Unit]
+Description=Prometheus Node Exporter
+Documentation=http://www.prometheus.io
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+WorkingDirectory=/opt/prometheus-node-exporter/{{ prometheus_node_exporter_extracted_dir_name }}
+
+User={{ prometheus_node_exporter_user }}
+Group={{ prometheus_node_exporter_group }}
+
+ExecStart=/opt/prometheus-node-exporter/{{ prometheus_node_exporter_extracted_dir_name }}/node_exporter
+
+[Install]
+WantedBy=multi-user.target
