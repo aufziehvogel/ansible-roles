@@ -3,6 +3,9 @@ prometheus_package_url: https://github.com/prometheus/prometheus/releases/downlo
 prometheus_extracted_dir_name: prometheus-2.10.0.linux-amd64
 prometheus_user: prometheus
 prometheus_group: prometheus
+prometheus_scrape_interval: 15s
+prometheus_scrape_timeout: 10s
+prometheus_evaluation_interval: 15s
 prometheus_scrape_configs:
   prometheus:
     targets:

@@ -18,6 +18,9 @@ Role Variables
   archive
 - `prometheus_user`: The user which should run prometheus
 - `prometheus_group`: The group which should run prometheus
+- `prometheus_scrape_interval`: Scrape interval for prometheus
+- `prometheus_scrape_timeout`: Scrape timeout for prometheus
+- `prometheus_evaluation_interval`: Evaluation interval for prometheus rules
 - `prometheus_scrape_configs`: `scrape_configs` definition for prometheus
 - `prometheus_blackbox_scrape_configs`: Optionally, if you use a blackbox
   exporter a list of hosts that should be probed.
