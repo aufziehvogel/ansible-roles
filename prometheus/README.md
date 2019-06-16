@@ -17,7 +17,7 @@ Role Variables
 - `prometheus_extracted_dir_name`: The name of the directory inside the zip
   archive
 - `prometheus_user`: The user which should run prometheus
-- `prometheus_group`: The group which should run elasticsearch
+- `prometheus_group`: The group which should run prometheus
 - `prometheus_scrape_configs`: `scrape_configs` definition for prometheus
 
 Example Playbook
