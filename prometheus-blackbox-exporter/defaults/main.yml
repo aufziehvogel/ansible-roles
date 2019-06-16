@@ -1,0 +1,7 @@
+---
+prometheus_blackbox_exporter_package_url: https://github.com/prometheus/blackbox_exporter/releases/download/v0.14.0/blackbox_exporter-0.14.0.linux-amd64.tar.gz
+prometheus_blackbox_exporter_package_filename: blackbox_exporter-0.14.0.linux-amd64.tar.gz
+prometheus_blackbox_exporter_extracted_dir_name: blackbox_exporter-0.14.0.linux-amd64
+prometheus_blackbox_exporter_user: prometheus
+prometheus_blackbox_exporter_group: prometheus
+prometheus_blackbox_exporter_bind: ":9115"

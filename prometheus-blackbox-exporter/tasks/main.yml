@@ -1,0 +1,53 @@
+---
+- name: Ensure target folder for prometheus blackbox exporter exists
+  file:
+    path: /opt/prometheus-blackbox-exporter
+    state: directory
+    owner: "{{ prometheus_blackbox_exporter_user }}"
+    group: "{{ prometheus_blackbox_exporter_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure prometheus blackbox exporter is downloaded
+  get_url:
+    url: "{{ prometheus_blackbox_exporter_package_url }}"
+    dest: "/opt/prometheus-blackbox-exporter/{{ prometheus_blackbox_exporter_package_filename }}"
+    force: no
+  register: prometheusdownloaded
+  become: true
+  become_user: "{{ prometheus_blackbox_exporter_user }}"
+
+- name: Unzip the downloaded prometheus blackbox exporter
+  unarchive:
+    src: "/opt/prometheus-blackbox-exporter/{{ prometheus_blackbox_exporter_package_filename }}"
+    dest: /opt/prometheus-blackbox-exporter/
+    remote_src: True
+  when: prometheusdownloaded is changed
+  become: true
+  become_user: "{{ prometheus_blackbox_exporter_user }}"
+
+- name: Ensure target folder for configuration exists
+  file:
+    path: /opt/prometheus-blackbox-exporter/config
+    state: directory
+    owner: "{{ prometheus_blackbox_exporter_user }}"
+    group: "{{ prometheus_blackbox_exporter_group }}"
+    mode: 0755
+  become: true
+  become_user: "{{ prometheus_blackbox_exporter_user }}"
+
+- name: Ensure prometheus blackbox exporter configuration is installed
+  template:
+    src: templates/blackbox.yml
+    dest: /opt/prometheus-blackbox-exporter/config/blackbox.yml
+    mode: 0755
+  become: true
+  become_user: "{{ prometheus_blackbox_exporter_user }}"
+
+- name: Ensure prometheus blackbox exporter systemd script is installed
+  template:
+    src: templates/prometheus-blackbox-exporter.service
+    dest: /etc/systemd/system/prometheus-blackbox-exporter.service
+    mode: 0755
+  become: true
+  notify: Start prometheus blackbox exporter

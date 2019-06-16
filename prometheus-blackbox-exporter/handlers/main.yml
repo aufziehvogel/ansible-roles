@@ -1,0 +1,7 @@
+---
+- name: Start prometheus blackbox exporter
+  service:
+    name: prometheus-blackbox-exporter
+    state: started
+    enabled: yes
+  become: true
