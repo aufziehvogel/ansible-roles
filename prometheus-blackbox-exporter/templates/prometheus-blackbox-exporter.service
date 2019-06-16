@@ -5,7 +5,6 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-RuntimeDirectory=prometheus
 WorkingDirectory=/opt/prometheus-blackbox-exporter/{{ prometheus_blackbox_exporter_extracted_dir_name }}
 
 User={{ prometheus_blackbox_exporter_user }}
