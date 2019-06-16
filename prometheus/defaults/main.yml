@@ -7,3 +7,5 @@ prometheus_scrape_configs:
   prometheus:
     targets:
       - localhost:9090
+
+prometheus_blackbox_host: 127.0.0.1:9115

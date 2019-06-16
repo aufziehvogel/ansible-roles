@@ -29,3 +29,22 @@ scrape_configs:
       - '{{ target }}'
 {% endfor %}
 {% endfor %}
+
+{% if prometheus_blackbox_scrape_configs is defined %}
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+{% for target in prometheus_blackbox_scrape_configs %}
+        - '{{ target }}'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ prometheus_blackbox_host }}
+{% endfor %}
+{% endif %}
