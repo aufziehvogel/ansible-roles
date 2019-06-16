@@ -23,7 +23,8 @@ Role Variables
 - `prometheus_evaluation_interval`: Evaluation interval for prometheus rules
 - `prometheus_scrape_configs`: `scrape_configs` definition for prometheus
 - `prometheus_blackbox_scrape_configs`: Optionally, if you use a blackbox
-  exporter a list of hosts that should be probed.
+  exporter a list of hosts that should be probed. To use this option you have
+  to use the ansible-role `prometheus-blackbox-exporter`.
 
 Example Playbook
 ----------------

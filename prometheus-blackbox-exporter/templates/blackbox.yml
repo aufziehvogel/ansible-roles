@@ -1,3 +1,11 @@
 modules:
-  http_2xx:
+  http_2xx_ipv4:
     prober: http
+    http:
+      preferred_ip_protocol: "ip4"
+      ip_protocol_fallback: false # no fallback to "ip6"
+  http_2xx_ipv6:
+    prober: http
+    http:
+      preferred_ip_protocol: "ip6"
+      ip_protocol_fallback: false # no fallback to "ip4"
