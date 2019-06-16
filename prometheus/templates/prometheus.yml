@@ -1,0 +1,31 @@
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # metrics_path defaults to '/metrics'
+  # scheme defaults to 'http'.
+{% for scrape_config in prometheus_scrape_configs %}
+  - job_name: '{{ scrape_config }}'
+    static_configs:
+    - targets:
+{% for target in prometheus_scrape_configs[scrape_config]['targets'] %}
+      - '{{ target }}'
+{% endfor %}
+{% endfor %}

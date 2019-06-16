@@ -1,0 +1,53 @@
+---
+- name: Ensure target folder for prometheus exists
+  file:
+    path: /opt/prometheus
+    state: directory
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure prometheus is downloaded
+  get_url:
+    url: "{{ prometheus_package_url }}"
+    dest: /opt/prometheus/prometheus.tar.gz
+    force: no
+  register: prometheusdownloaded
+  become: true
+  become_user: "{{ prometheus_user }}"
+
+- name: Unzip the downloaded prometheus
+  unarchive:
+    src: /opt/prometheus/prometheus.tar.gz
+    dest: /opt/prometheus/
+    remote_src: True
+  when: prometheusdownloaded is changed
+  become: true
+  become_user: "{{ prometheus_user }}"
+
+- name: Ensure target folder for configuration exists
+  file:
+    path: /opt/prometheus/config
+    state: directory
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: 0755
+  become: true
+  become_user: "{{ prometheus_user }}"
+
+- name: Ensure prometheus configuration is installed
+  template:
+    src: templates/prometheus.yml
+    dest: /opt/prometheus/config/prometheus.yml
+    mode: 0755
+  become: true
+  become_user: "{{ prometheus_user }}"
+
+- name: Ensure prometheus systemd script is installed
+  template:
+    src: templates/prometheus.service
+    dest: /etc/systemd/system/prometheus.service
+    mode: 0755
+  become: true
+  notify: Start prometheus

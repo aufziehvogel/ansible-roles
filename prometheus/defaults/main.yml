@@ -1,0 +1,9 @@
+---
+prometheus_package_url: https://github.com/prometheus/prometheus/releases/download/v2.10.0/prometheus-2.10.0.linux-amd64.tar.gz
+prometheus_extracted_dir_name: prometheus-2.10.0.linux-amd64
+prometheus_user: prometheus
+prometheus_group: prometheus
+prometheus_scrape_configs:
+  prometheus:
+    targets:
+      - localhost:9090

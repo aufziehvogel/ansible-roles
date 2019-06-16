@@ -1,0 +1,17 @@
+[Unit]
+Description=Prometheus
+Documentation=http://www.prometheus.io
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+RuntimeDirectory=prometheus
+WorkingDirectory=/opt/prometheus/{{ prometheus_extracted_dir_name }}
+
+User={{ prometheus_user }}
+Group={{ prometheus_group }}
+
+ExecStart=/opt/prometheus/{{ prometheus_extracted_dir_name }}/prometheus --config.file /opt/prometheus/config/prometheus.yml
+
+[Install]
+WantedBy=multi-user.target
