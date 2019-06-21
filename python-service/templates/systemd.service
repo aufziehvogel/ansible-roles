@@ -1,0 +1,22 @@
+[Unit]
+Description=Python Service {{ python_service_name }}
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory={{ python_service_dest_path }}/env/bin
+
+# For now switch to shell, because one of our projects actually requires that
+# we are inside Virtualenv
+# but in future try to use:
+# ExecStart={{ python_service_dest_path }}/env/bin/python {{ python_service_dest_path }}/env/bin/{{ python_service_bin_name }}
+ExecStart=/usr/bin/env bash -c 'cd {{ python_service_dest_path }} && source env/bin/activate && {{ python_service_bin_name }}'
+
+User={{ python_service_user }}
+Group={{ python_service_group }}
+{% for env in python_service_env_variables %}
+Environment={{ env }}
+{% endfor %}
+
+[Install]
+WantedBy=multi-user.target

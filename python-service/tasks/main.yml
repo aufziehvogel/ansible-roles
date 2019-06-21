@@ -1,0 +1,40 @@
+- name: Ensure Python3 is installed
+  package:
+    name: python3
+    state: latest
+  become: true
+
+- name: Ensure virtualenv is installed
+  package:
+    name: virtualenv
+    state: latest
+  become: true
+
+- name: Ensure target folder for project exists
+  file:
+    owner: "{{ python_service_user }}"
+    group: "{{ python_service_group }}"
+    path: "{{ python_service_dest_path }}"
+    state: directory
+  become: true
+
+- name: Ensure project in virtualenv is installed
+  pip:
+    name: "{{ python_service_repo_url }}"
+    virtualenv: "{{ python_service_dest_path }}/env"
+    virtualenv_python: python3
+  become: true
+  become_user: "{{ python_service_user }}"
+
+- name: Ensure systemd configuration is installed
+  template:
+    src: templates/systemd.service
+    dest: "/etc/systemd/system/{{ python_service_name }}.service"
+  become: true
+
+- name: Ensure service is enabled and started
+  service:
+    name: "{{ python_service_name }}"
+    state: started
+    enabled: true
+  become: true
