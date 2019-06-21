@@ -10,7 +10,7 @@ WorkingDirectory=/opt/prometheus-node-exporter/{{ prometheus_node_exporter_extra
 User={{ prometheus_node_exporter_user }}
 Group={{ prometheus_node_exporter_group }}
 
-ExecStart=/opt/prometheus-node-exporter/{{ prometheus_node_exporter_extracted_dir_name }}/node_exporter
+ExecStart=/opt/prometheus-node-exporter/{{ prometheus_node_exporter_extracted_dir_name }}/node_exporter --collector.systemd
 
 [Install]
 WantedBy=multi-user.target
