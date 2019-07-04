@@ -1,0 +1,7 @@
+---
+- name: Start syslog-ng
+  service:
+    name: syslog-ng
+    state: started
+    enabled: yes
+  become: true
