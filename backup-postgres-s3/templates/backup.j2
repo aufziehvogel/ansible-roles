@@ -29,4 +29,5 @@ su -c "aws s3 cp $filepath s3://{{ backup_postgres_s3_bucket }}/postgres/${filen
 
 rm $filepath
 
-curl -fsS --retry 3 {{ backup_postgres_s3_healthchecks_url }} > /dev/null
+unixtime=$(date +%s)
+echo "{{ backup_postgres_s3_prometheus_metric_name }} $unixtime" | curl --data-binary @- {{ backup_postgres_s3_prometheus_pushgateway }}
