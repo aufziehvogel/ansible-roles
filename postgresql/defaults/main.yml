@@ -1,0 +1,4 @@
+---
+postgresql_listen_global: false
+postgresql_allow_connections:
+  - ""

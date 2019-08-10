@@ -1,0 +1,25 @@
+---
+- name: Ensure PostgreSQL is installed
+  package:
+    name: postgresql
+    state: latest
+  become: true
+  notify: Start PostgreSQL
+
+- name: Ensure that PostgreSQL listens to outside world
+  lineinfile:
+    path: /etc/postgresql/9.6/main/postgresql.conf
+    regexp: 'listen_addresses'
+    line: "listen_addresses='*'"
+  when: postgresql_listen_global
+  become: true
+  notify: Restart PostgreSQL
+
+- name: Ensure that PostgreSQL allows requests for molescrape-dashboard
+  lineinfile:
+    path: /etc/postgresql/9.6/main/pg_hba.conf
+    line: "{{ item }}"
+    line: "host molescrape molescrape 159.69.19.14/0 md5"
+  with_items: "{{ postgresql_allow_connections }}"
+  become: true
+  notify: Restart PostgreSQL
