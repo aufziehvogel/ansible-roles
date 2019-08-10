@@ -1,0 +1,35 @@
+---
+- name: Ensure target folder for prometheus pushgateway exists
+  file:
+    path: /opt/prometheus-pushgateway
+    state: directory
+    owner: "{{ prometheus_pushgateway_user }}"
+    group: "{{ prometheus_pushgateway_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure prometheus pushgateway is downloaded
+  get_url:
+    url: "{{ prometheus_pushgateway_package_url }}"
+    dest: "/opt/prometheus-pushgateway/{{ prometheus_pushgateway_package_filename }}"
+    force: no
+  register: prometheusdownloaded
+  become: true
+  become_user: "{{ prometheus_pushgateway_user }}"
+
+- name: Unzip the downloaded prometheus pushgateway
+  unarchive:
+    src: "/opt/prometheus-pushgateway/{{ prometheus_pushgateway_package_filename }}"
+    dest: /opt/prometheus-pushgateway/
+    remote_src: True
+  when: prometheusdownloaded is changed
+  become: true
+  become_user: "{{ prometheus_pushgateway_user }}"
+
+- name: Ensure prometheus pushgateway systemd script is installed
+  template:
+    src: templates/prometheus-pushgateway.service
+    dest: /etc/systemd/system/prometheus-pushgateway.service
+    mode: 0755
+  become: true
+  notify: Start prometheus pushgateway

@@ -1,0 +1,7 @@
+---
+prometheus_pushgateway_package_url: https://github.com/prometheus/pushgateway/releases/download/v0.8.0/pushgateway-0.8.0.linux-amd64.tar.gz
+prometheus_pushgateway_package_filename: pushgateway-0.8.0.linux-amd64.tar.gz
+prometheus_pushgateway_extracted_dir_name: pushgateway-0.8.0.linux-amd64
+prometheus_pushgateway_user: prometheus
+prometheus_pushgateway_group: prometheus
+prometheus_pushgateway_bind: ":9091"

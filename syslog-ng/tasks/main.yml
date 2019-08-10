@@ -1,0 +1,8 @@
+---
+- name: Ensure syslog-ng is installed
+  package:
+    name: syslog-ng
+    state: latest
+  become: true
+  notify: Start syslog-ng
+

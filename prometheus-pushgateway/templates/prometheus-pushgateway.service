@@ -1,0 +1,16 @@
+[Unit]
+Description=Prometheus Pushgateway
+Documentation=http://www.prometheus.io
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+WorkingDirectory=/opt/prometheus-pushgateway/{{ prometheus_pushgateway_extracted_dir_name }}
+
+User={{ prometheus_pushgateway_user }}
+Group={{ prometheus_pushgateway_group }}
+
+ExecStart=/opt/prometheus-pushgateway/{{ prometheus_pushgateway_extracted_dir_name }}/pushgateway --web.listen-address="{{ prometheus_pushgateway_bind }}"
+
+[Install]
+WantedBy=multi-user.target

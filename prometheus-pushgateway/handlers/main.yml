@@ -1,0 +1,7 @@
+---
+- name: Start prometheus pushgateway
+  service:
+    name: prometheus-pushgateway
+    state: started
+    enabled: yes
+  become: true
