@@ -19,7 +19,6 @@
   lineinfile:
     path: /etc/postgresql/9.6/main/pg_hba.conf
     line: "{{ item }}"
-    line: "host molescrape molescrape 159.69.19.14/0 md5"
   with_items: "{{ postgresql_allow_connections }}"
   become: true
   notify: Restart PostgreSQL
