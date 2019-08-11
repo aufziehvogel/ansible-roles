@@ -1,0 +1,50 @@
+---
+- name: Ensure that group for git exists
+  user:
+    name: "{{ gitea_group }}"
+  become: true
+
+- name: Ensure that user for git exists
+  user:
+    name: "{{ gitea_user }}"
+    shell: /bin/bash
+    system: true
+    comment: Git Version Control
+    group: "{{ gitea_group }}"
+    password: '!' # disabled-password
+    home: "/home/{{ gitea_user }}"
+  become: true
+
+- name: Ensure target folder for gitea exists
+  file:
+    path: /opt/gitea
+    state: directory
+    owner: "{{ gitea_user }}"
+    group: "{{ gitea_group }}"
+    mode: 0755
+  become: true
+
+- name: Ensure gitea is downloaded
+  get_url:
+    url: "{{ gitea_package_url }}"
+    dest: /opt/gitea/gitea
+    force: no
+  register: giteadownloaded
+  become: true
+  become_user: "{{ gitea_user }}"
+
+- name: Ensure gitea configuration is installed
+  template:
+    src: templates/app.ini
+    dest: /opt/gitea/app.ini
+    mode: 0755
+  become: true
+  become_user: "{{ gitea_user }}"
+
+- name: Ensure gitea systemd script is installed
+  template:
+    src: templates/gitea.service
+    dest: /etc/systemd/system/gitea.service
+    mode: 0755
+  become: true
+  notify: Start gitea

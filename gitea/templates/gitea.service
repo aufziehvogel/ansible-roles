@@ -1,0 +1,17 @@
+[Unit]
+Description=Gitea
+Documentation=https://docs.gitea.io/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+RuntimeDirectory=gitea
+WorkingDirectory=/opt/gitea
+
+User={{ gitea_user }}
+Group={{ gitea_group }}
+
+ExecStart=/opt/gitea/gitea web -c /opt/gitea/app.ini -port {{ gitea_http_port }}
+
+[Install]
+WantedBy=multi-user.target

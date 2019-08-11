@@ -1,0 +1,7 @@
+---
+- name: Start gitea
+  service:
+    name: gitea
+    state: started
+    enabled: yes
+  become: true
