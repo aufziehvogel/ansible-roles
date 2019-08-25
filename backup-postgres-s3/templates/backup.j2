@@ -29,5 +29,9 @@ su -c "aws s3 cp $filepath s3://{{ backup_postgres_s3_bucket }}/postgres/${filen
 
 rm $filepath
 
-unixtime=$(date +%s)
-echo "{{ backup_postgres_s3_prometheus_metric_name }} $unixtime" | curl --data-binary @- {{ backup_postgres_s3_prometheus_pushgateway }}
+# send signal if file was successfully uploaded
+su -c "aws s3api head-object --bucket \"{{ backup_postgres_s3_bucket }}\" --key \"postgres/$filename\"" {{ backup_postgres_s3_s3_user }}
+if [ $? -eq 0 ]; then
+    unixtime=$(date +%s)
+    echo "{{ backup_postgres_s3_prometheus_metric_name }} $unixtime" | curl --data-binary @- {{ backup_postgres_s3_prometheus_pushgateway }}
+fi
