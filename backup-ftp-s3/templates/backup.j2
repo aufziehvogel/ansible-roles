@@ -29,5 +29,5 @@ rm $filepath
 su -c "aws s3api head-object --bucket \"{{ backup_ftp_s3_bucket }}\" --key \"ftp/$filename\"" {{ backup_ftp_s3_s3_user }}
 if [ $? -eq 0 ]; then
     unixtime=$(date +%s)
-    echo "{{ backup_ftp_s3_prometheus_metric_name }}{jobname=\"{{ backup_ftp_s3_jobname }}\"} $unixtime" | curl --data-binary @- {{ backup_ftp_s3_prometheus_pushgateway }}
+    echo "{{ backup_ftp_s3_prometheus_metric_name }}{jobname=\"{{ backup_ftp_s3_jobname }}\"} $unixtime" | curl --data-binary @- {{ backup_ftp_s3_prometheus_pushgateway }}_{{ backup_ftp_s3_jobname }}
 fi
