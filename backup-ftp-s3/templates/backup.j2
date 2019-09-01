@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+targetpath=$(su -c "mktemp -d" {{ backup_ftp_s3_s3_user }})
+
+su -c "wget -m --user=\"{{ backup_ftp_s3_ftp_user }}\" --password=\"{{ backup_ftp_s3_ftp_password }}\" -P \"$targetpath\" \"ftp://{{ backup_ftp_s3_ftp_server }}{{ backup_ftp_s3_ftp_path }}\"" {{ backup_ftp_s3_s3_user }}
+
+filepath=/tmp/{{ backup_ftp_s3_jobname }}-$(date +%Y-%m-%d).tar
+filename=$(basename -- "$filepath")
+tar cvf "$filepath" "$targetpath"
+
+rm -rf $targetpath
+
+{% if backup_ftp_s3_gpgkey %}
+su -c "gpg --encrypt --recipient {{ backup_ftp_s3_gpgkey_mail }} --trust-model always $filepath" {{ backup_ftp_s3_s3_user }}
+
+# delete the file without gpg suffix
+rm $filepath
+
+# filename now has a gpg suffix
+filename=${filename}.gpg
+filepath=${filepath}.gpg
+{% endif %}
+
+su -c "aws s3 cp $filepath s3://{{ backup_ftp_s3_bucket }}/ftp/${filename}" {{ backup_ftp_s3_s3_user }}
+
+rm $filepath
+
+# send signal if file was successfully uploaded
+su -c "aws s3api head-object --bucket \"{{ backup_ftp_s3_bucket }}\" --key \"ftp/$filename\"" {{ backup_ftp_s3_s3_user }}
+if [ $? -eq 0 ]; then
+    unixtime=$(date +%s)
+    echo "{{ backup_ftp_s3_prometheus_metric_name }}{jobname=\"{{ backup_ftp_s3_jobname }}\"} $unixtime" | curl --data-binary @- {{ backup_ftp_s3_prometheus_pushgateway }}
+fi

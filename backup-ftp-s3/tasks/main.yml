@@ -1,0 +1,27 @@
+---
+- name: Ensure aws-cli is installed
+  package:
+    name: awscli
+    state: present
+  become: true
+
+- name: Make sure GPG public key is uploaded
+  template:
+    src: templates/gpg.asc.j2
+    dest: /tmp/gpg.asc
+  register: gpgkey
+
+- name: Make sure GPG public key is imported
+  command: "gpg --import /tmp/gpg.asc"
+  # Must be imported to the keyring of the user that should encrypt
+  become: true
+  become_user: "{{ backup_ftp_s3_s3_user }}"
+  when: gpgkey is changed
+
+- name: Ensure backup script is installed
+  template:
+    src: templates/backup.j2
+    dest: "/etc/cron.weekly/backup-ftp-s3-{{ backup_ftp_s3_jobname }}"
+    remote_src: no
+    mode: 0755
+  become: true

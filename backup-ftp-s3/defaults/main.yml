@@ -1,0 +1,4 @@
+---
+backup_ftp_s3_bucket: backup
+backup_ftp_s3_prometheus_pushgateway: http://localhost:9091/metrics/job/backup_ftp_s3
+backup_ftp_s3_prometheus_metric_name: backup_ftp_s3_execution_time
