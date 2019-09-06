@@ -22,6 +22,8 @@ Role Variables
 - `prometheus_blackbox_exporter_group`: The group which should run the
   exporter
 - `prometheus_blackbox_exporter_bind`: The bind address for this service
+- `prometheus_blackbox_user_agent`: Set a custom user-agent, can be useful
+  if some of your customers' websites block your user-agent
 
 Example Playbook
 ----------------

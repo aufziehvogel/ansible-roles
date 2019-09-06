@@ -4,8 +4,14 @@ modules:
     http:
       preferred_ip_protocol: "ip4"
       ip_protocol_fallback: false # no fallback to "ip6"
+{% if prometheus_blackbox_user_agent is defined %}      headers:
+        User-Agent: {{ prometheus_blackbox_user_agent }}
+{% endif %}
   http_2xx_ipv6:
     prober: http
     http:
       preferred_ip_protocol: "ip6"
       ip_protocol_fallback: false # no fallback to "ip4"
+{% if prometheus_blackbox_user_agent is defined %}      headers:
+        User-Agent: {{ prometheus_blackbox_user_agent }}
+{% endif %}
